@@ -1,28 +1,32 @@
 import React from 'react';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
-import PageNotFound from '../404/404';
-import Favorites from '../favorites/favorites';
-import Login from '../login/login';
-import Main from '../main/main';
-import Property from '../property/property.jsx';
-import {PLACES_COUNT_TYPES} from '../types';
+import {PageNotFound} from '../404/404';
+import {Favorites} from '../favorites/favorites';
+import {Login} from '../login/login';
+import {Main} from '../main/main';
+import {Property} from '../property/property.jsx';
+import {APP_TYPES} from '../types';
 import {AppRoute} from '../../constants';
 
-const App = (props) => {
+export const App = (props) => {
   const {placesCount} = props;
+  const {offers} = props;
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
           <Main
             placesCount = {placesCount}
+            offers = {offers}
           />
         </Route>
         <Route exact path={AppRoute.LOGIN}>
           <Login />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
-          <Favorites />
+          <Favorites
+            offers = {offers}
+          />
         </Route>
         <Route exact path={AppRoute.ROOM}>
           <Property />
@@ -35,6 +39,4 @@ const App = (props) => {
   );
 };
 
-App.propTypes = PLACES_COUNT_TYPES;
-
-export default App;
+App.propTypes = APP_TYPES;

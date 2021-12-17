@@ -1,12 +1,14 @@
 import React from 'react';
-import Header from '../header/header';
-import {PLACES_COUNT_TYPES} from '../types';
-import {nanoid} from 'nanoid';
-import Card from '../card/card';
+import {Header} from '../header/header';
+import {Places} from '../places-list/places-list';
+import {LocationsList} from '../locations-list/locations-list';
+import {APP_TYPES} from '../types';
+import {Locations} from '../../constants';
 
-const Main = (props) => {
-  const {placesCount} = props;
-
+export const Main = ({placesCount, offers}) => {
+  const currentCity = () => {
+    return Locations[3];
+  };
   return (
     <>
       <div className="page page--gray page--main">
@@ -14,40 +16,9 @@ const Main = (props) => {
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
-            <section className="locations container">
-              <ul className="locations__list tabs__list">
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Paris</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Cologne</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Brussels</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item tabs__item--active">
-                    <span>Amsterdam</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Hamburg</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Dusseldorf</span>
-                  </a>
-                </li>
-              </ul>
-            </section>
+            <LocationsList
+              currentCity = {currentCity}
+            />
           </div>
           <div className="cities">
             <div className="cities__places-container container">
@@ -62,24 +33,16 @@ const Main = (props) => {
                       <use xlinkHref="#icon-arrow-select"></use>
                     </svg>
                   </span>
-                  <ul className="places__options places__options--custom places__options--opened">
+                  <ul className="places__options places__options--custom"
+                  // places__options--opened"
+                  >
                     <li className="places__option places__option--active" tabIndex="0">Popular</li>
                     <li className="places__option" tabIndex="0">Price: low to high</li>
                     <li className="places__option" tabIndex="0">Price: high to low</li>
                     <li className="places__option" tabIndex="0">Top rated first</li>
                   </ul>
                 </form>
-                <div className="cities__places-list places__list tabs__content">
-                  {
-                    [
-                      <Card key= {nanoid()}/>,
-                      <Card key= {nanoid()}/>,
-                      <Card key= {nanoid()}/>,
-                      <Card key= {nanoid()}/>,
-                      <Card key= {nanoid()}/>,
-                    ].map((item) => item)
-                  }
-                </div>
+                <Places offers={offers}/>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map"></section>
@@ -92,6 +55,4 @@ const Main = (props) => {
   );
 };
 
-Main.propTypes = PLACES_COUNT_TYPES;
-
-export default Main;
+Main.propTypes = APP_TYPES;

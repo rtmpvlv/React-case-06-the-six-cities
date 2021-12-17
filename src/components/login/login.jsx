@@ -1,7 +1,9 @@
 import React from 'react';
-import Header from '../header/header';
+import {Header} from '../header/header';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../constants';
 
-const Login = () => {
+export const Login = () => {
   return (
     <>
       <div className="page page--gray page--login">
@@ -24,9 +26,9 @@ const Login = () => {
             </section>
             <section className="locations locations--login locations--current">
               <div className="locations__item">
-                <a className="locations__item-link" href="#">
+                <Link className="locations__item-link" to={AppRoute.MAIN}>
                   <span>Amsterdam</span>
-                </a>
+                </Link>
               </div>
             </section>
           </div>
@@ -35,5 +37,3 @@ const Login = () => {
     </>
   );
 };
-
-export default Login;

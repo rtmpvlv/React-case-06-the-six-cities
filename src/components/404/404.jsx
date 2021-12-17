@@ -1,7 +1,9 @@
 import React from 'react';
-import Header from '../header/header';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../constants';
+import {Header} from '../header/header';
 
-const PageNotFound = () => {
+export const PageNotFound = () => {
   return (
     <>
       <div className="page page--favorites-empty">
@@ -12,7 +14,7 @@ const PageNotFound = () => {
               <h1 className="visually-hidden">Page not found.</h1>
               <div className="favorites__status-wrapper">
                 <b className="favorites__status">Error 404</b>
-                <p className="favorites__status-description">Page not found. Click here to return to the main page.</p>
+                <p className="favorites__status-description"><Link to={AppRoute.MAIN}>Page not found. Click here to return to the main page.</Link></p>
               </div>
             </section>
           </div>
@@ -26,5 +28,3 @@ const PageNotFound = () => {
     </>
   );
 };
-
-export default PageNotFound;

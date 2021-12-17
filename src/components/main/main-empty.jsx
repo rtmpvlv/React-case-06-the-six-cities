@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from '../header/header';
+import {Header} from '../header/header';
 
-const MainIsEmpty = () => {
+export const MainIsEmpty = () => {
   return (
     <>
       <div className="page page--gray page--main">
@@ -61,4 +61,3 @@ const MainIsEmpty = () => {
   );
 };
 
-export default MainIsEmpty;
