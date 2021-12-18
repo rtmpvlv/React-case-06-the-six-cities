@@ -5,18 +5,16 @@ import {Favorites} from '../favorites/favorites';
 import {Login} from '../login/login';
 import {Main} from '../main/main';
 import {Property} from '../property/property.jsx';
-import {APP_TYPES} from '../types';
+import {OFFERS_TYPES} from '../types';
 import {AppRoute} from '../../constants';
 
 export const App = (props) => {
-  const {placesCount} = props;
   const {offers} = props;
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
           <Main
-            placesCount = {placesCount}
             offers = {offers}
           />
         </Route>
@@ -29,7 +27,9 @@ export const App = (props) => {
           />
         </Route>
         <Route exact path={AppRoute.ROOM}>
-          <Property />
+          <Property
+            offers = {offers}
+          />
         </Route>
         <Route>
           <PageNotFound />
@@ -39,4 +39,4 @@ export const App = (props) => {
   );
 };
 
-App.propTypes = APP_TYPES;
+App.propTypes = OFFERS_TYPES;

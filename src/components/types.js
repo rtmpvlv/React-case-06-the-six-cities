@@ -1,9 +1,5 @@
 import PropTypes from 'prop-types';
 
-export const PLACES_COUNT_TYPES = {
-  placesCount: PropTypes.number.isRequired,
-};
-
 export const CURRENT_CITY_TYPES = {
   currentCity: PropTypes.oneOfType([
     PropTypes.string,
@@ -92,9 +88,3 @@ export const OFFER_TYPES = {
     type: PropTypes.string.isRequired,
   })
 };
-
-export const APP_TYPES = Object.assign(
-    {},
-    PLACES_COUNT_TYPES,
-    OFFERS_TYPES,
-);

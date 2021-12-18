@@ -2,10 +2,10 @@ import React from 'react';
 import {Header} from '../header/header';
 import {Places} from '../places-list/places-list';
 import {LocationsList} from '../locations-list/locations-list';
-import {APP_TYPES} from '../types';
+import {OFFERS_TYPES} from '../types';
 import {Locations} from '../../constants';
 
-export const Main = ({placesCount, offers}) => {
+export const Main = ({offers}) => {
   const currentCity = () => {
     return Locations[3];
   };
@@ -24,7 +24,7 @@ export const Main = ({placesCount, offers}) => {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{placesCount} places to stay in Amsterdam</b>
+                <b className="places__found">{offers.length} places to stay in Amsterdam</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by </span>
                   <span className="places__sorting-type" tabIndex="0">
@@ -55,4 +55,4 @@ export const Main = ({placesCount, offers}) => {
   );
 };
 
-Main.propTypes = APP_TYPES;
+Main.propTypes = OFFERS_TYPES;

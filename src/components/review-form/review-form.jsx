@@ -8,6 +8,11 @@ export const ReviewForm = () => {
 
   const [state, setState] = useState(INIT_STATE);
 
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    setState(INIT_STATE);
+  };
+
   const handleRatingChange = (evt) => {
     setState({
       ...state,
@@ -28,10 +33,8 @@ export const ReviewForm = () => {
       className="reviews__form form"
       action="#"
       method="post"
-      onSubmit={(evt) => {
-        evt.preventDefault();
-        setState(INIT_STATE);
-      }}>
+      onSubmit={handleSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         <input
