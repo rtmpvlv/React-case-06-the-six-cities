@@ -1,11 +1,12 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
 import {Header} from '../header/header';
-import {ReviewForm} from '../review-form/review-form';
+import {ReviewForm} from './review-form';
+import {Map} from '../map/map';
 import {OFFER_TYPES} from '../types';
 import {NearOffers} from './near-offers';
 
-export const Property = ({offers}) => {
+export const Property = ({offers, onMouseHover, hoveredElement}) => {
   const NEAR_OFFERS_LENGTH = {
     START: 0,
     MAX: 3,
@@ -152,13 +153,18 @@ export const Property = ({offers}) => {
                 </section>
               </div>
             </div>
-            <section className="property__map map"></section>
+            <section className="property__map map">
+              <Map
+                offers={nearOffers}
+                hoveredElement={hoveredElement}
+              />
+            </section>
           </section>
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
-                {nearOffers.map((offer) => <NearOffers key={offer.id} offer={offer}/>)}
+                {nearOffers.map((offer) => <NearOffers key={offer.id} offer={offer} onMouseHover={onMouseHover}/>)}
               </div>
             </section>
           </div>

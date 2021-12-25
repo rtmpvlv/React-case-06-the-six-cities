@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {PageNotFound} from '../404/404';
 import {Favorites} from '../favorites/favorites';
@@ -10,12 +10,15 @@ import {AppRoute} from '../../constants';
 
 export const App = (props) => {
   const {offers} = props;
+  const [hoveredElement, setHoveredElement] = useState(null);
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
           <Main
             offers = {offers}
+            onMouseHover = {setHoveredElement}
+            hoveredElement={hoveredElement}
           />
         </Route>
         <Route exact path={AppRoute.LOGIN}>
@@ -29,6 +32,8 @@ export const App = (props) => {
         <Route exact path={AppRoute.ROOM}>
           <Property
             offers = {offers}
+            onMouseHover = {setHoveredElement}
+            hoveredElement={hoveredElement}
           />
         </Route>
         <Route>

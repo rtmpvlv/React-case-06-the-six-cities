@@ -2,10 +2,11 @@ import React from 'react';
 import {Header} from '../header/header';
 import {Places} from '../places-list/places-list';
 import {LocationsList} from '../locations-list/locations-list';
+import {Map} from '../map/map';
 import {OFFERS_TYPES} from '../types';
 import {Locations} from '../../constants';
 
-export const Main = ({offers}) => {
+export const Main = ({offers, onMouseHover, hoveredElement}) => {
   const currentCity = () => {
     return Locations[3];
   };
@@ -42,10 +43,18 @@ export const Main = ({offers}) => {
                     <li className="places__option" tabIndex="0">Top rated first</li>
                   </ul>
                 </form>
-                <Places offers={offers}/>
+                <Places
+                  offers={offers}
+                  onMouseHover = {onMouseHover}
+                />
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map"></section>
+                <section className="cities__map map">
+                  <Map
+                    offers={offers}
+                    hoveredElement={hoveredElement}
+                  />
+                </section>
               </div>
             </div>
           </div>

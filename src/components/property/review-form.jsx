@@ -10,7 +10,6 @@ export const ReviewForm = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    setState(INIT_STATE);
   };
 
   const handleRatingChange = (evt) => {
