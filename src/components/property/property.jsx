@@ -1,12 +1,20 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
 import {Header} from '../header/header';
+import {ReviewsList} from './reviews-list';
 import {ReviewForm} from './review-form';
 import {Map} from '../map/map';
-import {OFFER_TYPES} from '../types';
 import {NearOffers} from './near-offers';
+import {OFFERS_TYPES} from '../types';
 
-export const Property = ({offers, onMouseHover, hoveredElement}) => {
+const livingTypeToReadable = {
+  apartment: `Apartment`,
+  room: `Room`,
+  house: `House`,
+  hotel: `Hotel`,
+};
+
+export const Property = ({offers, onMouseHover, hoveredElement, reviews}) => {
   const NEAR_OFFERS_LENGTH = {
     START: 0,
     MAX: 3,
@@ -14,6 +22,7 @@ export const Property = ({offers, onMouseHover, hoveredElement}) => {
 
   const currentId = Number(useParams().id);
   const currentOffer = offers.find((offer) => offer.id === currentId);
+  const currentReviews = reviews.filter((review) => review.id === currentId);
   const {bedrooms, description, goods, host, isPremium, maxAdults, price, title, rating, type} = currentOffer;
 
   let nearOffers = offers.filter((offer) => offer !== currentOffer && offer.city.name === currentOffer.city.name);
@@ -51,11 +60,11 @@ export const Property = ({offers, onMouseHover, hoveredElement}) => {
             </div>
             <div className="property__container container">
               <div className="property__wrapper">
-                {isPremium ?
+                {isPremium &&
                   <div className="property__mark">
                     <span>Premium</span>
                   </div>
-                  : ``}
+                }
                 <div className="property__name-wrapper">
                   <h1 className="property__name">{title}</h1>
                   <button className="property__bookmark-button button" type="button">
@@ -76,7 +85,7 @@ export const Property = ({offers, onMouseHover, hoveredElement}) => {
                 </div>
                 <ul className="property__features">
                   <li className="property__feature property__feature--entire">
-                    {type}
+                    {livingTypeToReadable[type]}
                   </li>
                   <li className="property__feature property__feature--bedrooms">
                     {bedrooms} Bedrooms
@@ -122,33 +131,10 @@ export const Property = ({offers, onMouseHover, hoveredElement}) => {
                   </div>
                 </div>
                 <section className="property__reviews reviews">
-                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                  <ul className="reviews__list">
-                    <li className="reviews__item">
-                      <div className="reviews__user user">
-                        <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                          <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar"/>
-                        </div>
-                        <span className="reviews__user-name">
-                          Max
-                        </span>
-                      </div>
-                      <div className="reviews__info">
-                        <div className="reviews__rating rating">
-                          <div className="reviews__stars rating__stars">
-                            <span style={{
-                              width: `80%`
-                            }}></span>
-                            <span className="visually-hidden">Rating</span>
-                          </div>
-                        </div>
-                        <p className="reviews__text">
-                          A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                        </p>
-                        <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-                      </div>
-                    </li>
-                  </ul>
+                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{currentReviews.length}</span></h2>
+                  <ReviewsList
+                    reviews={currentReviews}
+                  />
                   <ReviewForm/>
                 </section>
               </div>
@@ -174,4 +160,4 @@ export const Property = ({offers, onMouseHover, hoveredElement}) => {
   );
 };
 
-Property.propTypes = OFFER_TYPES;
+Property.propTypes = OFFERS_TYPES;

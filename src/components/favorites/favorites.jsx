@@ -1,7 +1,7 @@
 import React from 'react';
 import {Header} from '../header/header';
 import {Locations} from '../../constants';
-import {OFFER_TYPES} from '../types';
+import {OFFERS_TYPES} from '../types';
 
 export const Favorites = ({offers}) => {
   return (
@@ -81,4 +81,4 @@ export const Favorites = ({offers}) => {
   );
 };
 
-Favorites.propTypes = OFFER_TYPES;
+Favorites.propTypes = OFFERS_TYPES;

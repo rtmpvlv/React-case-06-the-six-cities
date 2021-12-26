@@ -64,7 +64,7 @@ export const mockData = [{
   "price": 123,
   "rating": 5.0,
   "title": `Beautiful & luxurious studio at great location`,
-  "type": `flat`
+  "type": `room`
 },
 {
   "bedrooms": 1,
@@ -98,7 +98,7 @@ export const mockData = [{
   "price": 134,
   "rating": 4.2,
   "title": `Beautiful & luxurious studio at great location`,
-  "type": `palace`
+  "type": `hotel`
 },
 {
   "bedrooms": 6,
@@ -166,5 +166,5 @@ export const mockData = [{
   "price": 260,
   "rating": 4.8,
   "title": `Beautiful & luxurious studio at great location`,
-  "type": `studio`
+  "type": `apartment`
 }];

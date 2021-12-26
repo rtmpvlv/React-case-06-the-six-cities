@@ -8,8 +8,7 @@ import {Property} from '../property/property.jsx';
 import {OFFERS_TYPES} from '../types';
 import {AppRoute} from '../../constants';
 
-export const App = (props) => {
-  const {offers} = props;
+export const App = ({offers, reviews}) => {
   const [hoveredElement, setHoveredElement] = useState(null);
   return (
     <BrowserRouter>
@@ -34,6 +33,7 @@ export const App = (props) => {
             offers = {offers}
             onMouseHover = {setHoveredElement}
             hoveredElement={hoveredElement}
+            reviews={reviews}
           />
         </Route>
         <Route>

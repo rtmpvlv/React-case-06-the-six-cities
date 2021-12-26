@@ -1,7 +1,7 @@
 import React, {useRef, useEffect, useState} from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {OFFER_TYPES} from '../types';
+import {OFFERS_TYPES} from '../types';
 
 export const Map = ({offers, hoveredElement}) => {
   const cityLocation = {
@@ -70,4 +70,4 @@ export const Map = ({offers, hoveredElement}) => {
   );
 };
 
-Map.propTypes = OFFER_TYPES;
+Map.propTypes = OFFERS_TYPES;
