@@ -13,10 +13,12 @@ export const ReviewForm = () => {
   };
 
   const handleRatingChange = (evt) => {
-    setState({
-      ...state,
-      rating: Number(evt.target.value),
-    });
+    if (evt.target.nodeName === `INPUT`) {
+      setState({
+        ...state,
+        rating: Number(evt.target.value),
+      });
+    }
   };
 
   const handleTextChange = (evt) => {
@@ -35,14 +37,16 @@ export const ReviewForm = () => {
       onSubmit={handleSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <div className="reviews__rating-form form__rating">
+      <div
+        className="reviews__rating-form form__rating"
+        onChange={handleRatingChange}
+      >
         <input
           className="form__rating-input visually-hidden"
           name="rating"
           value="5"
           id="5-stars"
           type="radio"
-          onChange={handleRatingChange}
         />
         <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
           <svg className="form__star-image" width="37" height="33">
@@ -56,7 +60,6 @@ export const ReviewForm = () => {
           value="4"
           id="4-stars"
           type="radio"
-          onChange={handleRatingChange}
         />
         <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
           <svg className="form__star-image" width="37" height="33">
@@ -70,7 +73,6 @@ export const ReviewForm = () => {
           value="3"
           id="3-stars"
           type="radio"
-          onChange={handleRatingChange}
         />
         <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
           <svg className="form__star-image" width="37" height="33">
@@ -84,7 +86,6 @@ export const ReviewForm = () => {
           value="2"
           id="2-stars"
           type="radio"
-          onChange={handleRatingChange}
         />
         <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
           <svg className="form__star-image" width="37" height="33">
@@ -98,7 +99,6 @@ export const ReviewForm = () => {
           value="1"
           id="1-star"
           type="radio"
-          onChange={handleRatingChange}
         />
         <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
           <svg className="form__star-image" width="37" height="33">

@@ -19,10 +19,10 @@ export const Card = ({offer, onMouseHover}) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {isPremium ?
+      {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
-        </div> : ``
+        </div>
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">

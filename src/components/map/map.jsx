@@ -12,7 +12,6 @@ export const Map = ({offers, hoveredElement}) => {
 
   const mapRef = useRef(null);
   const [mapState, setMapState] = useState(null);
-  const firstItem = offers[0] || {};
 
   useEffect(() => {
     mapRef.current = leaflet.map(`map`, {
@@ -40,7 +39,7 @@ export const Map = ({offers, hoveredElement}) => {
     return () => {
       mapRef.current.remove();
     };
-  }, [mapRef, firstItem, setMapState]);
+  }, [mapRef, setMapState]);
 
   useEffect(() => {
     if (mapState) {

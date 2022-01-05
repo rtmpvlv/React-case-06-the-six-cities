@@ -62,6 +62,12 @@ export const OFFERS_TYPES = {
   offers: PropTypes.arrayOf(offerType).isRequired,
 };
 
+export const MAIN_TYPES = {
+  offers: PropTypes.arrayOf(offerType).isRequired,
+  selectedCity: PropTypes.string.isRequired,
+  onUserChoice: PropTypes.func.isRequired,
+};
+
 export const OFFER_TYPES = {
   offer: offerType,
 };

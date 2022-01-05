@@ -3,13 +3,10 @@ import {Header} from '../header/header';
 import {Places} from '../places-list/places-list';
 import {LocationsList} from '../locations-list/locations-list';
 import {Map} from '../map/map';
-import {OFFERS_TYPES} from '../types';
-import {Locations} from '../../constants';
+import {MAIN_TYPES} from '../types';
+import withMainPage from './hocs/with-main-page.js';
 
-export const Main = ({offers, onMouseHover, hoveredElement}) => {
-  const currentCity = () => {
-    return Locations[3];
-  };
+const Main = ({selectedCity, onUserChoice, offers, onMouseHover, hoveredElement}) => {
   return (
     <>
       <div className="page page--gray page--main">
@@ -18,14 +15,15 @@ export const Main = ({offers, onMouseHover, hoveredElement}) => {
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
             <LocationsList
-              currentCity = {currentCity}
+              currentCity = {selectedCity}
+              onUserChoice = {onUserChoice}
             />
           </div>
           <div className="cities">
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+                <b className="places__found">{offers.length} places to stay in {selectedCity}</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by </span>
                   <span className="places__sorting-type" tabIndex="0">
@@ -64,4 +62,6 @@ export const Main = ({offers, onMouseHover, hoveredElement}) => {
   );
 };
 
-Main.propTypes = OFFERS_TYPES;
+Main.propTypes = MAIN_TYPES;
+
+export const MainWrapped = withMainPage(Main);
