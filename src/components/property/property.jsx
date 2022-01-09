@@ -6,6 +6,7 @@ import {ReviewForm} from './review-form';
 import {Map} from '../map/map';
 import {NearOffers} from './near-offers';
 import {OFFERS_TYPES} from '../types';
+import withProperty from './hocs/with-property';
 
 const livingTypeToReadable = {
   apartment: `Apartment`,
@@ -14,7 +15,7 @@ const livingTypeToReadable = {
   hotel: `Hotel`,
 };
 
-export const Property = ({offers, onMouseHover, hoveredElement, reviews}) => {
+export const Property = ({offers, onOfferHover, hoveredElement, reviews}) => {
   const NEAR_OFFERS_LENGTH = {
     START: 0,
     MAX: 3,
@@ -150,7 +151,7 @@ export const Property = ({offers, onMouseHover, hoveredElement, reviews}) => {
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
-                {nearOffers.map((offer) => <NearOffers key={offer.id} offer={offer} onMouseHover={onMouseHover}/>)}
+                {nearOffers.map((offer) => <NearOffers key={offer.id} offer={offer} onMouseHover={onOfferHover}/>)}
               </div>
             </section>
           </div>
@@ -161,3 +162,6 @@ export const Property = ({offers, onMouseHover, hoveredElement, reviews}) => {
 };
 
 Property.propTypes = OFFERS_TYPES;
+
+export const PropertyWrapped = withProperty(Property);
+

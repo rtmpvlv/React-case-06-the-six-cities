@@ -79,3 +79,7 @@ export const REVIEWS_TYPE = {
 export const REVIEW_TYPE = {
   review: reviewType
 };
+
+export const SORT_TYPES = {
+  sortState: PropTypes.string.isRequired,
+};
