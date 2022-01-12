@@ -1,31 +1,28 @@
 import React from 'react';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {PageNotFound} from '../404/404';
-import {Favorites} from '../favorites/favorites';
+import Favorites from '../favorites/favorites';
 import {Login} from '../login/login';
-import {MainWrapped} from '../main/main';
-import {PropertyWrapped} from '../property/property.jsx';
-import {OFFERS_TYPES} from '../types';
+import Main from '../main/main';
+import Property from '../property/property.jsx';
+import {REVIEWS_TYPE} from '../types';
 import {AppRoute} from '../../constants';
 
-export const App = ({offers, reviews}) => {
+export const App = ({reviews}) => {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
-          <MainWrapped/>
+          <Main/>
         </Route>
         <Route exact path={AppRoute.LOGIN}>
           <Login />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
-          <Favorites
-            offers = {offers}
-          />
+          <Favorites/>
         </Route>
         <Route exact path={AppRoute.ROOM}>
-          <PropertyWrapped
-            offers = {offers}
+          <Property
             reviews={reviews}
           />
         </Route>
@@ -37,4 +34,4 @@ export const App = ({offers, reviews}) => {
   );
 };
 
-App.propTypes = OFFERS_TYPES;
+App.propTypes = REVIEWS_TYPE;

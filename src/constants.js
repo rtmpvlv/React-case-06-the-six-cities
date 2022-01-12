@@ -21,3 +21,12 @@ export const SortState = {
   BY_RATING: `Top rated first`,
 };
 
+export const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};
+
+export const ApiRequestURLs = {
+  HOTELS: `/hotels`,
+  LOGIN: `/login`,
+};

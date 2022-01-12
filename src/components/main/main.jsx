@@ -1,15 +1,30 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {connect} from "react-redux";
 
 import {Header} from '../header/header';
 import {LocationsList} from '../locations-list/locations-list';
 import {Sort} from './sort-form';
 import {Places} from '../places-list/places-list';
 import {Map} from '../map/map';
+import {SyncLoader} from 'react-spinners';
+import {css} from "@emotion/react";
+
+import {ActionCreator} from '../../store/action';
+import {fetchOffersList} from '../../store/api-actions';
 
 import {MAIN_TYPES} from '../types';
-import withMainPage from './hocs/with-main-page.js';
 
-const Main = ({selectedCity, onUserChoice, sortState, onSortChange, offers, onOfferHover, hoveredElement}) => {
+const override = css`
+  margin: auto;
+`;
+
+const Main = ({selectedCity, onUserChoice, sortState, onSortChange, currentOffers, onOfferHover, hoveredElement, isDataLoaded, onLoadData}) => {
+  useEffect(() => {
+    if (!isDataLoaded) {
+      onLoadData();
+    }
+  }, [isDataLoaded]);
+
   return (
     <>
       <div className="page page--gray page--main">
@@ -24,26 +39,30 @@ const Main = ({selectedCity, onUserChoice, sortState, onSortChange, offers, onOf
           </div>
           <div className="cities">
             <div className="cities__places-container container">
-              <section className="cities__places places">
-                <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offers.length} places to stay in {selectedCity}</b>
-                <Sort
-                  sortState={sortState}
-                  onSortChange={onSortChange}
-                />
-                <Places
-                  offers={offers}
-                  onMouseHover = {onOfferHover}
-                />
-              </section>
-              <div className="cities__right-section">
-                <section className="cities__map map">
-                  <Map
-                    offers={offers}
-                    hoveredElement={hoveredElement}
-                  />
-                </section>
-              </div>
+              {isDataLoaded ?
+                <>
+                  <section className="cities__places places">
+                    <h2 className="visually-hidden">Places</h2>
+                    <b className="places__found">{currentOffers.length} places to stay in {selectedCity}</b>
+                    <Sort
+                      sortState={sortState}
+                      onSortChange={onSortChange}
+                    />
+                    <Places
+                      offers={currentOffers}
+                      onMouseHover = {onOfferHover}
+                    />
+                  </section>
+                  <div className="cities__right-section">
+                    <section className="cities__map map">
+                      <Map
+                        offers={currentOffers}
+                        hoveredElement={hoveredElement}
+                      />
+                    </section>
+                  </div>
+                </> :
+                <SyncLoader color='#4481c3' css={override}/>}
             </div>
           </div>
         </main>
@@ -54,4 +73,31 @@ const Main = ({selectedCity, onUserChoice, sortState, onSortChange, offers, onOf
 
 Main.propTypes = MAIN_TYPES;
 
-export const MainWrapped = withMainPage(Main);
+const mapStateToProps = (state) => {
+  return {
+    selectedCity: state.selectedCity,
+    currentOffers: state.currentOffers,
+    sortState: state.sortState,
+    hoveredElement: state.hoveredElement,
+    isDataLoaded: state.isDataLoaded,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onUserChoice(item) {
+      dispatch(ActionCreator.changeCity(item));
+    },
+    onSortChange(item) {
+      dispatch(ActionCreator.changeSort(item));
+    },
+    onOfferHover(id) {
+      dispatch(ActionCreator.hoverElement(id));
+    },
+    onLoadData() {
+      dispatch(fetchOffersList());
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from "react-redux";
 import {useParams} from 'react-router-dom';
 import {Header} from '../header/header';
 import {ReviewsList} from './reviews-list';
@@ -6,7 +7,7 @@ import {ReviewForm} from './review-form';
 import {Map} from '../map/map';
 import {NearOffers} from './near-offers';
 import {OFFERS_TYPES} from '../types';
-import withProperty from './hocs/with-property';
+import {ActionCreator} from '../../store/action';
 
 const livingTypeToReadable = {
   apartment: `Apartment`,
@@ -15,7 +16,7 @@ const livingTypeToReadable = {
   hotel: `Hotel`,
 };
 
-export const Property = ({offers, onOfferHover, hoveredElement, reviews}) => {
+const Property = ({offers, onOfferHover, hoveredElement, reviews}) => {
   const NEAR_OFFERS_LENGTH = {
     START: 0,
     MAX: 3,
@@ -163,5 +164,19 @@ export const Property = ({offers, onOfferHover, hoveredElement, reviews}) => {
 
 Property.propTypes = OFFERS_TYPES;
 
-export const PropertyWrapped = withProperty(Property);
+function mapStateToProps(state) {
+  return {
+    offers: state.offers,
+    hoveredElement: state.hoveredElement,
+  };
+}
 
+function mapDispatchToProps(dispatch) {
+  return {
+    onOfferHover(id) {
+      dispatch(ActionCreator.hoverElement(id));
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Property);

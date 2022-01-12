@@ -63,9 +63,11 @@ export const OFFERS_TYPES = {
 };
 
 export const MAIN_TYPES = {
-  offers: PropTypes.arrayOf(offerType).isRequired,
+  currentOffers: PropTypes.arrayOf(offerType).isRequired,
   selectedCity: PropTypes.string.isRequired,
   onUserChoice: PropTypes.func.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
 };
 
 export const OFFER_TYPES = {

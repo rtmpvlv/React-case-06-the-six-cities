@@ -1,34 +1,44 @@
-import {mockData} from '../mocks/offers';
 import {adaptOfferToClient} from '../adapter';
 import {Locations} from '../constants';
 import {ActionType} from './action';
-import {SortState} from '../constants';
+import {SortState, AuthorizationStatus} from '../constants';
 import {sortedOffers} from '../utils';
 
-const offers = mockData.map((offer) => adaptOfferToClient(offer));
+let offers = [];
 
 const initialState = {
-  selectedCity: Locations[0],
+  offers,
   currentOffers: offers.filter((offer) => offer.city.name === Locations[0]),
+  selectedCity: Locations[0],
   sortState: SortState.POPULAR,
   hoveredElement: null,
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  isDataLoaded: false,
 };
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.OFFERS_LIST_LOAD: {
+      offers = action.payload.map((offer) => adaptOfferToClient(offer));
+      return {
+        ...state,
+        offers,
+        currentOffers: offers.filter((offer) => offer.city.name === state.selectedCity),
+        isDataLoaded: true,
+      };
+    }
     case ActionType.CHANGE_CITY: {
-      const currentOffers = offers.filter((offer) => offer.city.name === action.payload);
       return {
         ...state,
         selectedCity: action.payload,
-        currentOffers,
+        currentOffers: offers.filter((offer) => offer.city.name === action.payload),
       };
     }
     case ActionType.SORT_CHANGE: {
       return {
         ...state,
         sortState: SortState[action.payload],
-        currentOffers: sortedOffers[SortState[action.payload]](offers),
+        currentOffers: sortedOffers[SortState[action.payload]](offers.filter((offer) => offer.city.name === state.selectedCity)),
       };
     }
     case ActionType.HOVER_ELEMENT: {
@@ -40,6 +50,12 @@ export const reducer = (state = initialState, action) => {
     case ActionType.OFFERS_LIST_UPDATE: {
       return {
         ...state,
+      };
+    }
+    case ActionType.REQUIRED_AUTHORIZATION: {
+      return {
+        ...state,
+        authorizationStatus: action.payload,
       };
     }
     default: return state;
