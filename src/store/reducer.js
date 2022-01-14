@@ -13,6 +13,7 @@ const initialState = {
   sortState: SortState.POPULAR,
   hoveredElement: null,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
+  authorizationEmail: null,
   isDataLoaded: false,
 };
 
@@ -58,6 +59,13 @@ export const reducer = (state = initialState, action) => {
         authorizationStatus: action.payload,
       };
     }
+    case ActionType.UPDATE_LOGIN_DATA: {
+      return {
+        ...state,
+        authorizationEmail: action.payload,
+      };
+    }
+
     default: return state;
   }
 };

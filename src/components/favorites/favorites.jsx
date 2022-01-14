@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Header} from '../header/header';
+import Header from '../header/header';
 import {Locations} from '../../constants';
 import {OFFERS_TYPES} from '../types';
 

@@ -1,12 +1,5 @@
 import PropTypes from 'prop-types';
 
-export const CURRENT_CITY_TYPES = {
-  currentCity: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]).isRequired,
-};
-
 const offerType = PropTypes.shape({
   bedrooms: PropTypes.number.isRequired,
   city: PropTypes.shape({
@@ -68,6 +61,10 @@ export const MAIN_TYPES = {
   onUserChoice: PropTypes.func.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
+  authorizationEmail: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.oneOf([null]).isRequired,
+  ])
 };
 
 export const OFFER_TYPES = {
@@ -84,4 +81,29 @@ export const REVIEW_TYPE = {
 
 export const SORT_TYPES = {
   sortState: PropTypes.string.isRequired,
+};
+
+export const LOGIN_TYPES = {
+  onSubmit: PropTypes.func.isRequired,
+};
+
+export const CURRENT_CITY_TYPES = {
+  currentCity: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]).isRequired,
+};
+
+export const PRIVATE_ROUTE_TYPES = {
+  authorizationStatus: PropTypes.string.isRequired,
+  exact: PropTypes.bool.isRequired,
+  path: PropTypes.string.isRequired,
+  render: PropTypes.func.isRequired,
+};
+
+export const HEADER_TYPES = {
+  authorizationEmail: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.oneOf([null]).isRequired,
+  ])
 };

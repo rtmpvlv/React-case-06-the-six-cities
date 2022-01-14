@@ -5,6 +5,7 @@ export const ActionType = {
   OFFERS_LIST_LOAD: `@offersList/Load`,
   OFFERS_LIST_UPDATE: `@offersList/Update`,
   REQUIRED_AUTHORIZATION: `@user/requiredAuthorization`,
+  UPDATE_LOGIN_DATA: `@user/updateLoginData`
 };
 
 export const ActionCreator = {
@@ -30,5 +31,9 @@ export const ActionCreator = {
   requiredAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status,
+  }),
+  updateLoginData: (email) => ({
+    type: ActionType.UPDATE_LOGIN_DATA,
+    payload: email,
   })
 };

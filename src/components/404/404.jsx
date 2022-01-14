@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../constants';
-import {Header} from '../header/header';
+import Header from '../header/header';
 
 export const PageNotFound = () => {
   return (

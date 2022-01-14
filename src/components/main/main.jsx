@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect} from "react-redux";
 
-import {Header} from '../header/header';
+import Header from '../header/header';
 import {LocationsList} from '../locations-list/locations-list';
 import {Sort} from './sort-form';
 import {Places} from '../places-list/places-list';

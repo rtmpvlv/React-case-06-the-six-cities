@@ -1,8 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 import {AppRoute} from '../../constants';
+import {HEADER_TYPES} from '../types';
 
-export const Header = () => {
+export const Header = ({authorizationEmail = null}) => {
   return (
     <>
       <header className="header">
@@ -19,7 +21,9 @@ export const Header = () => {
                   <Link className="header__nav-link header__nav-link--profile" to={AppRoute.LOGIN}>
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
-                    <span className="header__user-name user__name">Username</span>
+                    <span className="header__user-name user__name">
+                      {authorizationEmail === null ? `Sign In` : authorizationEmail}
+                    </span>
                   </Link>
                 </li>
               </ul>
@@ -30,3 +34,12 @@ export const Header = () => {
     </>
   );
 };
+
+Header.propTypes = HEADER_TYPES;
+
+const mapDispatchToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus,
+  authorizationEmail: state.authorizationEmail,
+});
+
+export default connect(mapDispatchToProps)(Header);
