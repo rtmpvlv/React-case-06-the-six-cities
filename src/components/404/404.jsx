@@ -14,7 +14,7 @@ export const PageNotFound = () => {
               <h1 className="visually-hidden">Page not found.</h1>
               <div className="favorites__status-wrapper">
                 <b className="favorites__status">Error 404</b>
-                <p className="favorites__status-description"><Link to={AppRoute.MAIN}>Page not found. Click here to return to the main page.</Link></p>
+                <p className="favorites__status-description"><Link to={AppRoute.MAIN}>This page is not found. Click here to return to the main page.</Link></p>
               </div>
             </section>
           </div>
