@@ -1,9 +1,12 @@
-import React from 'react';
-import {Locations} from '../../constants';
-import {CURRENT_CITY_TYPES} from '../types';
+import React from "react";
+import {Locations} from "../../constants";
+import {CURRENT_CITY_TYPES} from "../types";
 
-export const LocationsList = ({currentCity, onUserChoice}) => {
-  const handleCityChange = (city) => {
+export const LocationsList = (props) => {
+  const {currentCity, onUserChoice} = props;
+
+  const handleCityChange = (city, evt) => {
+    evt.preventDefault();
     onUserChoice(city);
   };
 
@@ -13,10 +16,12 @@ export const LocationsList = ({currentCity, onUserChoice}) => {
         {Locations.map((city) => (
           <li key={city} className="locations__item">
             <a
-              onClick={() => handleCityChange(city)}
-              className={currentCity === city ?
-                `locations__item-link tabs__item tabs__item--active`
-                : `locations__item-link tabs__item`}
+              onClick={(evt) => handleCityChange(city, evt)}
+              className={
+                currentCity === city
+                  ? `locations__item-link tabs__item tabs__item--active`
+                  : `locations__item-link tabs__item`
+              }
               href="#"
             >
               <span>{city}</span>

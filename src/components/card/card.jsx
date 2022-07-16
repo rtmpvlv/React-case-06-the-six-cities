@@ -1,8 +1,10 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import {OFFER_TYPES} from '../types';
+import React from "react";
+import {Link} from "react-router-dom";
+import {OFFER_TYPES} from "../types";
 
-export const Card = ({offer, onMouseHover}) => {
+export const Card = (props) => {
+  const {offer, onMouseHover} = props;
+
   const {id, isPremium, previewImage, price, title, type} = offer;
 
   const handleMouseEnter = () => {
@@ -19,14 +21,20 @@ export const Card = ({offer, onMouseHover}) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {isPremium &&
+      {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
-      }
+      )}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
+          <img
+            className="place-card__image"
+            src={previewImage}
+            width="260"
+            height="200"
+            alt="Place image"
+          />
         </a>
       </div>
       <div className="place-card__info">
@@ -44,9 +52,11 @@ export const Card = ({offer, onMouseHover}) => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{
-              width: `80%`
-            }}></span>
+            <span
+              style={{
+                width: `80%`,
+              }}
+            ></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
