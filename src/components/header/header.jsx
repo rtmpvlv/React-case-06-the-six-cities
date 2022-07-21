@@ -4,7 +4,8 @@ import {connect} from "react-redux";
 import {AppRoute, AuthorizationStatus} from "../../constants";
 import {HEADER_TYPES} from "../types";
 
-export const Header = ({authorizationEmail = null, authorizationStatus}) => {
+export const Header = (props) => {
+  const {authorizationEmail = null, authorizationStatus} = props;
   const renderLoginField = () => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
       return (

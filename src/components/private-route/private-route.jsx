@@ -1,8 +1,8 @@
-import React from 'react';
-import {Route, Redirect} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {AppRoute, AuthorizationStatus} from '../../constants';
-import {PRIVATE_ROUTE_TYPES} from '../types';
+import React from "react";
+import {Route, Redirect} from "react-router-dom";
+import {connect} from "react-redux";
+import {AppRoute, AuthorizationStatus} from "../../constants";
+import {PRIVATE_ROUTE_TYPES} from "../types";
 
 const PrivateRoute = ({render, path, exact, authorizationStatus}) => {
   return (
@@ -10,10 +10,10 @@ const PrivateRoute = ({render, path, exact, authorizationStatus}) => {
       path={path}
       exact={exact}
       render={(routeProps) => {
-        return (
-          authorizationStatus === AuthorizationStatus.AUTH
-            ? render(routeProps)
-            : <Redirect to={AppRoute.LOGIN}/>
+        return authorizationStatus === AuthorizationStatus.AUTH ? (
+          render(routeProps)
+        ) : (
+          <Redirect to={AppRoute.LOGIN} />
         );
       }}
     />
