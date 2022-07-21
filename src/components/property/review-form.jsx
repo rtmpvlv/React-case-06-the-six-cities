@@ -1,24 +1,22 @@
-import React, {useState} from 'react';
+import React, {useState} from "react";
+
+const STARS_VALUES = [`1`, `2`, `3`, `4`, `5`];
 
 export const ReviewForm = () => {
-  const INIT_STATE = {
+  const [state, setState] = useState({
     rating: 5,
     text: ``,
-  };
-
-  const [state, setState] = useState(INIT_STATE);
+  });
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
   };
 
   const handleRatingChange = (evt) => {
-    if (evt.target.nodeName === `INPUT`) {
-      setState({
-        ...state,
-        rating: Number(evt.target.value),
-      });
-    }
+    setState({
+      ...state,
+      rating: evt.target.value,
+    });
   };
 
   const handleTextChange = (evt) => {
@@ -28,6 +26,29 @@ export const ReviewForm = () => {
     });
   };
 
+  const renderStars = () => {
+    return STARS_VALUES.map((value) => (
+      <>
+        <input
+          className="form__rating-input visually-hidden"
+          name="rating"
+          value={value}
+          id={`${value}-stars`}
+          type="radio"
+          onChange={handleRatingChange}
+        />
+        <label
+          htmlFor={`${value}-stars`}
+          className="reviews__rating-label form__rating-label"
+          title="perfect"
+        >
+          <svg className="form__star-image" width="37" height="33">
+            <use xlinkHref="#icon-star"></use>
+          </svg>
+        </label>
+      </>
+    ));
+  };
 
   return (
     <form
@@ -36,75 +57,11 @@ export const ReviewForm = () => {
       method="post"
       onSubmit={handleSubmit}
     >
-      <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <div
-        className="reviews__rating-form form__rating"
-        onChange={handleRatingChange}
-      >
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="5"
-          id="5-stars"
-          type="radio"
-        />
-        <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="4"
-          id="4-stars"
-          type="radio"
-        />
-        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="3"
-          id="3-stars"
-          type="radio"
-        />
-        <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="2"
-          id="2-stars"
-          type="radio"
-        />
-        <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="1"
-          id="1-star"
-          type="radio"
-        />
-        <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
+      <label className="reviews__label form__label" htmlFor="review">
+        Your review
+      </label>
+      <div className="reviews__rating-form form__rating">
+        {renderStars()}
       </div>
       <textarea
         className="reviews__textarea form__textarea"
@@ -115,9 +72,17 @@ export const ReviewForm = () => {
       ></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          To submit review please make sure to set{` `}
+          <span className="reviews__star">rating</span> and describe your stay
+          with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
+        <button
+          className="reviews__submit form__submit button"
+          type="submit"
+          disabled=""
+        >
+          Submit
+        </button>
       </div>
     </form>
   );
