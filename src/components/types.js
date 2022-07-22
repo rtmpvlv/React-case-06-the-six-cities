@@ -59,8 +59,6 @@ export const MAIN_TYPES = {
   currentOffers: PropTypes.arrayOf(offerType).isRequired,
   selectedCity: PropTypes.string.isRequired,
   onUserChoice: PropTypes.func.isRequired,
-  isDataLoaded: PropTypes.bool.isRequired,
-  onLoadData: PropTypes.func.isRequired,
   authorizationEmail: PropTypes.oneOfType([
     PropTypes.string.isRequired,
     PropTypes.oneOf([null]).isRequired,
