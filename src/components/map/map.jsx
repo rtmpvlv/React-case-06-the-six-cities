@@ -2,30 +2,28 @@ import React, {useRef, useEffect, useState} from "react";
 import leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {connect} from "react-redux";
+import {Coordinates} from "../../constants";
 import {OFFERS_TYPES} from "../types";
 
-export const Map = ({offers, hoveredElement}) => {
-  const cityLocation = {
-    lat: 52.38333,
-    lng: 4.9,
-  };
-  const currentZoom = 12;
+const ZOOM = 12;
 
+export const Map = (props) => {
+  const {offers, hoveredElement, selectedCity} = props;
+  const [map, setMap] = useState(null);
   const mapRef = useRef(null);
-  const [mapState, setMapState] = useState(null);
 
   useEffect(() => {
     mapRef.current = leaflet.map(`map`, {
       center: {
-        lat: cityLocation.lat,
-        lng: cityLocation.lng,
+        lat: Coordinates[selectedCity].lat,
+        lng: Coordinates[selectedCity].lng,
       },
-      zoom: currentZoom,
+      zoom: ZOOM,
       zoomControl: false,
       marker: true,
     });
 
-    mapRef.current.setView(cityLocation, currentZoom);
+    mapRef.current.setView(Coordinates[selectedCity], ZOOM);
 
     leaflet
       .tileLayer(
@@ -38,15 +36,15 @@ export const Map = ({offers, hoveredElement}) => {
       )
       .addTo(mapRef.current);
 
-    setMapState(mapRef.current);
+    setMap(mapRef.current);
 
     return () => {
       mapRef.current.remove();
     };
-  }, [mapRef, setMapState]);
+  }, [selectedCity]);
 
   useEffect(() => {
-    if (mapState) {
+    if (map) {
       offers.forEach((point) => {
         const isActive = hoveredElement ? point.id === hoveredElement : false;
         const {location} = point;
@@ -69,7 +67,7 @@ export const Map = ({offers, hoveredElement}) => {
           .bindPopup(point.title);
       });
     }
-  }, [offers, hoveredElement, mapState]);
+  }, [props, map]);
 
   return <div id="map" style={{height: `100%`}} ref={mapRef} />;
 };
@@ -79,6 +77,7 @@ Map.propTypes = OFFERS_TYPES;
 const mapStateToProps = (state) => {
   return {
     hoveredElement: state.hoveredElement,
+    selectedCity: state.selectedCity,
   };
 };
 

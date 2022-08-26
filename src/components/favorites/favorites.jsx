@@ -14,7 +14,7 @@ export const Favorites = (props) => {
     }
   }, [isDataLoaded]);
 
-  const renderOffers = (currentOffers) => {
+  const renderOffers = (currentOffers) => (
     currentOffers.map(({id, price, title, type}) => (
       <article key={id} className="favorites__card place-card">
         <div className="favorites__image-wrapper place-card__image-wrapper">
@@ -60,8 +60,8 @@ export const Favorites = (props) => {
           <p className="place-card__type">{type}</p>
         </div>
       </article>
-    ));
-  };
+    ))
+  );
 
   const renderLocation = (city) => {
     const currentOffers = offers.filter((offer) => offer.city.name === city && offer.isFavorite);

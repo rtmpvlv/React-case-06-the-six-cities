@@ -14,6 +14,33 @@ export const Locations = [
   `Dusseldorf`,
 ];
 
+export const Coordinates = {
+  Paris: {
+    lat: 48.864716,
+    lng: 2.349014,
+  },
+  Cologne: {
+    lat: 50.935173,
+    lng: 6.953101,
+  },
+  Brussels: {
+    lat: 50.85045,
+    lng: 4.34878,
+  },
+  Amsterdam: {
+    lat: 52.371807,
+    lng: 4.896029,
+  },
+  Hamburg: {
+    lat: 53.551086,
+    lng: 9.993682,
+  },
+  Dusseldorf: {
+    lat: 51.233334,
+    lng: 6.783333,
+  },
+};
+
 export const SortState = {
   POPULAR: `Popular`,
   LOW_TO_HIGH: `Price: low to high`,
