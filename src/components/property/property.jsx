@@ -5,7 +5,7 @@ import Header from "../header/header";
 import {ReviewsList} from "./reviews-list";
 import {ReviewForm} from "./review-form";
 import Map from "../map/map";
-import {NearOffers} from "./near-offers";
+import {Card} from "../card/card";
 import {OFFERS_TYPES} from "../types";
 import {ActionCreator} from "../../store/action";
 
@@ -16,15 +16,16 @@ const LIVING_TYPE = {
   hotel: `Hotel`,
 };
 
-const Property = ({offers, onOfferHover, hoveredElement, reviews}) => {
-  const NEAR_OFFERS_LENGTH = {
-    START: 0,
-    MAX: 3,
-  };
+const NEAR_OFFERS_LENGTH = {
+  START: 0,
+  MAX: 3,
+};
 
+const Property = ({offers, onOfferHover, hoveredElement, reviews}) => {
   const currentId = Number(useParams().id);
   const currentOffer = offers.find((offer) => offer.id === currentId);
   const currentReviews = reviews.filter((review) => review.id === currentId);
+
   const {
     bedrooms,
     description,
@@ -42,6 +43,8 @@ const Property = ({offers, onOfferHover, hoveredElement, reviews}) => {
       (offer) =>
         offer !== currentOffer && offer.city.name === currentOffer.city.name
   );
+
+  // Take 3 near offers
   if (nearOffers.length > NEAR_OFFERS_LENGTH.MAX) {
     nearOffers = nearOffers.slice(
         NEAR_OFFERS_LENGTH.START,
@@ -144,7 +147,7 @@ const Property = ({offers, onOfferHover, hoveredElement, reviews}) => {
                   {bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                    Max {maxAdults} adults
+                  Max {maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
@@ -186,7 +189,7 @@ const Property = ({offers, onOfferHover, hoveredElement, reviews}) => {
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">
-                    Reviews &middot;{` `}
+                  Reviews &middot;{` `}
                   <span className="reviews__amount">
                     {currentReviews.length}
                   </span>
@@ -203,11 +206,11 @@ const Property = ({offers, onOfferHover, hoveredElement, reviews}) => {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">
-                Other places in the neighbourhood
+              Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
               {nearOffers.map((offer) => (
-                <NearOffers
+                <Card
                   key={offer.id}
                   offer={offer}
                   onMouseHover={onOfferHover}
