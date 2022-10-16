@@ -86,7 +86,7 @@ export const LOGIN_TYPES = {
 };
 
 export const CURRENT_CITY_TYPES = {
-  currentCity: PropTypes.oneOfType([
+  selectedCity: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.func,
   ]).isRequired,

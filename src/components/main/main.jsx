@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import Header from "../header/header";
-import {LocationsList} from "../locations-list/locations-list";
+import {HeaderLocationsList} from "../locations-list/header-locations-list";
 import {Sort} from "./sort-form";
 import PlacesList from "../places-list/places-list";
 import Map from "../map/map";
@@ -23,8 +23,8 @@ const Main = (props) => {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <LocationsList
-            currentCity={selectedCity}
+          <HeaderLocationsList
+            selectedCity={selectedCity}
             onUserChoice={onUserChoice}
           />
         </div>

@@ -4,11 +4,9 @@ import {ActionType} from './action';
 import {SortState, AuthorizationStatus} from '../constants';
 import {sortedOffers} from '../utils';
 
-let offers = [];
-
 const initialState = {
-  offers,
-  currentOffers: offers.filter((offer) => offer.city.name === Locations[0]),
+  offers: [],
+  currentOffers: [],
   selectedCity: Locations[0],
   sortState: SortState.POPULAR,
   hoveredElement: null,
@@ -20,7 +18,7 @@ const initialState = {
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.OFFERS_LIST_LOAD: {
-      offers = action.payload.map((offer) => adaptOfferToClient(offer));
+      const offers = action.payload.map((offer) => adaptOfferToClient(offer));
       return {
         ...state,
         offers,
@@ -32,14 +30,14 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         selectedCity: action.payload,
-        currentOffers: offers.filter((offer) => offer.city.name === action.payload),
+        currentOffers: state.offers.filter((offer) => offer.city.name === action.payload),
       };
     }
     case ActionType.SORT_CHANGE: {
       return {
         ...state,
         sortState: SortState[action.payload],
-        currentOffers: sortedOffers[SortState[action.payload]](offers.filter((offer) => offer.city.name === state.selectedCity)),
+        currentOffers: sortedOffers[SortState[action.payload]](state.offers.filter((offer) => offer.city.name === state.selectedCity)),
       };
     }
     case ActionType.HOVER_ELEMENT: {
@@ -65,7 +63,6 @@ export const reducer = (state = initialState, action) => {
         authorizationEmail: action.payload,
       };
     }
-
     default: return state;
   }
 };
