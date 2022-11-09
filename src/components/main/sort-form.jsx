@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {SortState} from '../../constants';
-import {SORT_TYPES} from '../types';
+import React, {useState} from "react";
+import {SortState} from "../../constants";
+import {SORT_TYPES} from "../types";
 
 export const Sort = ({sortState, onSortChange}) => {
   const [isOpened, setIsOpened] = useState(false);
@@ -29,16 +29,21 @@ export const Sort = ({sortState, onSortChange}) => {
       </span>
       <ul
         className={
-          isOpened ?
-            `places__options places__options--custom places__options--opened` :
-            `places__options places__options--custom`
+          isOpened
+            ? `places__options places__options--custom places__options--opened`
+            : `places__options places__options--custom`
         }
       >
-        {Object.entries(SortState).map((item) => <li
-          onClick={() => handleSortMenuClose(item[0])}
-          key={item}
-          className="places__option"
-          tabIndex="0">{item[1]}</li>)}
+        {Object.entries(SortState).map((item) => (
+          <li
+            onClick={() => handleSortMenuClose(item[0])}
+            key={item}
+            className="places__option"
+            tabIndex="0"
+          >
+            {item[1]}
+          </li>
+        ))}
       </ul>
     </form>
   );

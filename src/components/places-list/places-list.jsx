@@ -7,14 +7,14 @@ import {OFFERS_TYPES} from "../types";
 export const PlacesList = (props) => {
   const {
     offers,
-    onOfferHover,
+    onMouseHover,
     className = `cities__places-list places__list tabs__content`,
   } = props;
 
   return (
     <div className={className}>
       {offers.map((offer) => (
-        <Card key={offer.id} offer={offer} onMouseHover={onOfferHover} />
+        <Card key={offer.id} offer={offer} onMouseHover={onMouseHover} />
       ))}
     </div>
   );
@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onOfferHover(id) {
+    onMouseHover(id) {
       dispatch(ActionCreator.hoverElement(id));
     },
   };

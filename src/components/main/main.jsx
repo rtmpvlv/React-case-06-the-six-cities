@@ -14,7 +14,7 @@ const Main = (props) => {
     onUserChoice,
     sortState,
     onSortChange,
-    currentOffers,
+    offers,
   } = props;
 
   return (
@@ -33,14 +33,14 @@ const Main = (props) => {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {currentOffers.length} places to stay in {selectedCity}
+                {offers.length} places to stay in {selectedCity}
               </b>
               <Sort sortState={sortState} onSortChange={onSortChange} />
-              <PlacesList offers={currentOffers} />
+              <PlacesList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map offers={currentOffers} />
+                <Map offers={offers} />
               </section>
             </div>
           </div>
@@ -55,7 +55,7 @@ Main.propTypes = MAIN_TYPES;
 const mapStateToProps = (state) => {
   return {
     selectedCity: state.selectedCity,
-    currentOffers: state.currentOffers,
+    offers: state.currentOffers,
     sortState: state.sortState,
   };
 };

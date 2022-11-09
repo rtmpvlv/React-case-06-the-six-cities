@@ -56,7 +56,7 @@ export const OFFERS_TYPES = {
 };
 
 export const MAIN_TYPES = {
-  currentOffers: PropTypes.arrayOf(offerType).isRequired,
+  offers: PropTypes.arrayOf(offerType).isRequired,
   selectedCity: PropTypes.string.isRequired,
   onUserChoice: PropTypes.func.isRequired,
   authorizationEmail: PropTypes.oneOfType([
