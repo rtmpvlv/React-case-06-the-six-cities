@@ -1,15 +1,17 @@
 import React from "react";
-import {REVIEWS_TYPE} from "../types";
+import {COMMENTS_TYPE} from "../types";
 import {ReviewsItem} from "./reviews-item";
+import {adaptCommentToClient} from '../../adapter';
 
-export const ReviewsList = ({reviews}) => {
+
+export const ReviewsList = ({comments}) => {
   return (
     <ul className="reviews__list">
-      {reviews.map((review, i) => (
-        <ReviewsItem key={i} review={review} />
+      {comments.map((comment) => (
+        <ReviewsItem key={comment.id} review={adaptCommentToClient(comment)} />
       ))}
     </ul>
   );
 };
 
-ReviewsList.propTypes = REVIEWS_TYPE;
+ReviewsList.propTypes = COMMENTS_TYPE;

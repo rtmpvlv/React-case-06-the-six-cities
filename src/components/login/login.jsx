@@ -15,7 +15,7 @@ const Login = ({onSubmit}) => {
     evt.preventDefault();
 
     onSubmit({
-      login: loginRef.current.value,
+      email: loginRef.current.value,
       passwordRef: passwordRef.current.value,
     });
 

@@ -38,18 +38,18 @@ const offerType = PropTypes.shape({
   type: PropTypes.string.isRequired,
 }).isRequired;
 
-const reviewType = PropTypes.shape({
-  comment: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
-  rating: PropTypes.number.isRequired,
+const commentType = PropTypes.shape({
+  comment: PropTypes.string,
+  date: PropTypes.string,
+  id: PropTypes.number,
+  rating: PropTypes.number,
   user: PropTypes.shape({
-    avatarUrl: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    isPro: PropTypes.bool.isRequired,
-    name: PropTypes.string.isRequired,
-  }).isRequired,
-}).isRequired;
+    avatarUrl: PropTypes.string,
+    id: PropTypes.number,
+    isPro: PropTypes.bool,
+    name: PropTypes.string,
+  }),
+});
 
 export const OFFERS_TYPES = {
   offers: PropTypes.arrayOf(offerType).isRequired,
@@ -69,12 +69,12 @@ export const OFFER_TYPES = {
   offer: offerType,
 };
 
-export const REVIEWS_TYPE = {
-  reviews: PropTypes.arrayOf(reviewType).isRequired,
+export const COMMENTS_TYPE = {
+  comments: PropTypes.arrayOf(commentType).isRequired,
 };
 
 export const REVIEW_TYPE = {
-  review: reviewType
+  comment: commentType
 };
 
 export const SORT_TYPES = {

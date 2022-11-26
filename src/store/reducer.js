@@ -6,6 +6,7 @@ import {sortedOffers} from '../utils';
 
 const initialState = {
   offers: [],
+  comments: [],
   currentOffers: [],
   selectedCity: Locations[0],
   sortState: SortState.POPULAR,
@@ -13,6 +14,7 @@ const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   authorizationEmail: null,
   isDataLoaded: false,
+  isCommentsLoaded: false,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -61,6 +63,13 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         authorizationEmail: action.payload,
+      };
+    }
+    case ActionType.LOAD_COMMENTS: {
+      return {
+        ...state,
+        comments: action.payload,
+        isCommentsLoaded: true,
       };
     }
     default: return state;

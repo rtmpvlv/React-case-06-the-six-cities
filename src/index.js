@@ -10,8 +10,6 @@ import App from "./components/app/app";
 import {ActionCreator} from "./store/action";
 import {checkAuth} from "./store/api-actions";
 import {AuthorizationStatus} from "./constants";
-import {reviews} from "./mocks/reviews";
-import {adaptReviewToClient} from "./adapter";
 
 const api = createAPI(() =>
   store.dispatch(
@@ -28,7 +26,7 @@ store.dispatch(checkAuth());
 
 ReactDOM.render(
     <Provider store={store}>
-      <App reviews={reviews.map((review) => adaptReviewToClient(review))} />
+      <App />
     </Provider>,
     document.querySelector(`#root`)
 );

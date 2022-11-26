@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import Header from "../header/header";
-import {fetchOffersList} from "../../store/api-actions";
+import {loadOffers} from "../../store/api-actions";
 import {Locations} from "../../constants";
 import {OFFERS_TYPES} from "../types";
 
@@ -123,7 +123,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onLoadData() {
-      dispatch(fetchOffersList());
+      dispatch(loadOffers());
     },
   };
 };

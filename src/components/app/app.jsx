@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
+import PropTypes from 'prop-types';
 import {css} from "@emotion/react";
 import {SyncLoader} from "react-spinners";
 import {PageNotFound} from "../404/404";
@@ -9,8 +10,7 @@ import Login from "../login/login";
 import Main from "../main/main";
 import Property from "../property/property";
 import PrivateRoute from "../private-route/private-route";
-import {fetchOffersList} from "../../store/api-actions";
-import {REVIEWS_TYPE} from "../types";
+import {loadOffers} from "../../store/api-actions";
 import {AppRoute} from "../../constants";
 
 const override = css`
@@ -18,7 +18,7 @@ const override = css`
 `;
 
 export const App = (props) => {
-  const {reviews, onLoadData, isDataLoaded} = props;
+  const {onLoadData, isDataLoaded} = props;
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -46,11 +46,11 @@ export const App = (props) => {
       <Switch>
         <Route exact path={AppRoute.MAIN} render={() => <Main />} />
         <Route exact path={AppRoute.LOGIN} render={() => <Login />} />
-        <Route exact path={AppRoute.FAVORITES} render={() => <Favorites />} />
+        <PrivateRoute exact path={AppRoute.FAVORITES} render={() => <Favorites />} />
         <Route
           exact
           path={AppRoute.ROOM}
-          render={() => <Property reviews={reviews} />}
+          render={() => <Property />}
         />
         <Route render={() => <PageNotFound />} />
       </Switch>
@@ -58,7 +58,10 @@ export const App = (props) => {
   );
 };
 
-App.propTypes = REVIEWS_TYPE;
+App.propTypes = {
+  onLoadData: PropTypes.func.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -69,7 +72,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onLoadData() {
-      dispatch(fetchOffersList());
+      dispatch(loadOffers());
     },
   };
 };

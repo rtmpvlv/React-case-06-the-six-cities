@@ -28,7 +28,8 @@ export const ReviewForm = () => {
 
   const renderStars = () => {
     return STARS_VALUES.map((value) => (
-      <>
+      <React.Fragment key={value}
+      >
         <input
           className="form__rating-input visually-hidden"
           name="rating"
@@ -46,7 +47,7 @@ export const ReviewForm = () => {
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
-      </>
+      </React.Fragment>
     ));
   };
 

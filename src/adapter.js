@@ -53,7 +53,7 @@ export const adaptOfferToServer = (offer) => {
   return adaptedData;
 };
 
-export const adaptReviewToClient = (review) => {
+export const adaptCommentToClient = (review) => {
   const adaptedData = Object.assign(
       {},
       review,
@@ -71,7 +71,7 @@ export const adaptReviewToClient = (review) => {
   return adaptedData;
 };
 
-export const adaptReviewToServer = (review) => {
+export const adaptCommentToServer = (review) => {
   const adaptedData = Object.assign(
       {},
       review,

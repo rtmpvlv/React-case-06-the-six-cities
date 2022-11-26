@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {useParams} from "react-router-dom";
+import {loadComments} from "../../store/api-actions";
 import Header from "../header/header";
 import {ReviewsList} from "./reviews-list";
 import {ReviewForm} from "./review-form";
@@ -21,10 +22,25 @@ const NEAR_OFFERS_LENGTH = {
   MAX: 3,
 };
 
-const Property = ({offers, onOfferHover, hoveredElement, reviews}) => {
-  const currentId = Number(useParams().id);
+const Property = (props) => {
+  const {
+    offers,
+    onOfferHover,
+    hoveredElement,
+    comments = [],
+    isCommentsLoaded,
+    onLoadComments,
+  } = props;
+
+  const currentId = parseInt(useParams().id, 10);
   const currentOffer = offers.find((offer) => offer.id === currentId);
-  const currentReviews = reviews.filter((review) => review.id === currentId);
+
+  useEffect(() => {
+    if (!isCommentsLoaded) {
+      onLoadComments(currentId);
+    }
+  }, [isCommentsLoaded]);
+
 
   const {
     bedrooms,
@@ -191,10 +207,10 @@ const Property = ({offers, onOfferHover, hoveredElement, reviews}) => {
                 <h2 className="reviews__title">
                   Reviews &middot;{` `}
                   <span className="reviews__amount">
-                    {currentReviews.length}
+                    {comments.length}
                   </span>
                 </h2>
-                <ReviewsList reviews={currentReviews} />
+                <ReviewsList comments={comments} />
                 <ReviewForm />
               </section>
             </div>
@@ -232,6 +248,8 @@ function mapStateToProps(state) {
     hoveredElement: state.hoveredElement,
     authorizationStatus: state.authorizationStatus,
     authorizationEmail: state.authorizationEmail,
+    comments: state.comments,
+    isCommentsLoaded: state.isCommentsLoaded,
   };
 }
 
@@ -239,6 +257,9 @@ function mapDispatchToProps(dispatch) {
   return {
     onOfferHover(id) {
       dispatch(ActionCreator.hoverElement(id));
+    },
+    onLoadComments(offerId) {
+      dispatch(loadComments(offerId));
     },
   };
 }
