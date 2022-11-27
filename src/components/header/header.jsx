@@ -2,17 +2,19 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {AppRoute, AuthorizationStatus} from "../../constants";
+import {logout} from "../../store/api-actions";
 import {HEADER_TYPES} from "../types";
 
 export const Header = (props) => {
-  const {authorizationEmail = null, authorizationStatus} = props;
+  const {authorizationEmail, authorizationStatus, onLogout} = props;
+
   const renderLoginField = () => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
       return (
-        <a className="header__nav-link header__nav-link--profile">
+        <a onClick={onLogout} className="header__nav-link header__nav-link--profile">
           <div className="header__avatar-wrapper user__avatar-wrapper"></div>
           <span className="header__user-name user__name">
-            {authorizationEmail}
+            {authorizationEmail || `User`}
           </span>
         </a>
       );
@@ -26,8 +28,9 @@ export const Header = (props) => {
           <span className="header__user-name user__name">Sign In</span>
         </Link>
       );
+    } else {
+      return null;
     }
-    throw new Error(`Unknown authorization status.`);
   };
 
   return (
@@ -60,9 +63,17 @@ export const Header = (props) => {
 
 Header.propTypes = HEADER_TYPES;
 
-const mapDispatchToProps = (state) => ({
+const mapStateToProps = (state) => ({
   authorizationStatus: state.authorizationStatus,
   authorizationEmail: state.authorizationEmail,
 });
 
-export default connect(mapDispatchToProps)(Header);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onLogout() {
+      dispatch(logout());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

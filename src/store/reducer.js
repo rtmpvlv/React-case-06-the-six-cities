@@ -24,7 +24,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         offers,
-        currentOffers: offers.filter((offer) => offer.city.name === state.selectedCity),
+        currentOffers: offers.filter((offer) => offer.city.name === state.selectedCity), // exclude
         isDataLoaded: true,
       };
     }
@@ -70,6 +70,13 @@ export const reducer = (state = initialState, action) => {
         ...state,
         comments: action.payload,
         isCommentsLoaded: true,
+      };
+    }
+    case ActionType.LOGOUT: {
+      return {
+        ...state,
+        authorizationEmail: null,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
       };
     }
     default: return state;

@@ -7,6 +7,7 @@ export const ActionType = {
   REQUIRED_AUTHORIZATION: `@user/requiredAuthorization`,
   UPDATE_LOGIN_DATA: `@user/updateLoginData`,
   LOAD_COMMENTS: `@comments/loadComments`,
+  LOGOUT: `@user/logout`,
 };
 
 export const ActionCreator = {
@@ -40,5 +41,8 @@ export const ActionCreator = {
   loadComments: (comments) => ({
     type: ActionType.LOAD_COMMENTS,
     payload: comments,
+  }),
+  logout: () => ({
+    type: ActionType.LOGOUT,
   }),
 };

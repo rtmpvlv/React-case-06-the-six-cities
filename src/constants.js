@@ -54,7 +54,8 @@ export const AuthorizationStatus = {
 };
 
 export const ApiRequestURLs = {
-  HOTELS: `/hotels`,
   LOGIN: `/login`,
+  LOGOUT: `/logout`,
+  HOTELS: `/hotels`,
   COMMENTS: `/comments/`,
 };

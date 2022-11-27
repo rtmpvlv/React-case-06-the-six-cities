@@ -1,8 +1,7 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
-import PropTypes from 'prop-types';
-import {css} from "@emotion/react";
+import PropTypes from "prop-types";
 import {SyncLoader} from "react-spinners";
 import {PageNotFound} from "../404/404";
 import Favorites from "../favorites/favorites";
@@ -13,9 +12,13 @@ import PrivateRoute from "../private-route/private-route";
 import {loadOffers} from "../../store/api-actions";
 import {AppRoute} from "../../constants";
 
-const override = css`
-  margin: auto;
-`;
+const spinnerStyle = {
+  width: `100vw`,
+  height: `100vh`,
+  display: `flex`,
+  justifyContent: `center`,
+  alignItems: `center`,
+};
 
 export const App = (props) => {
   const {onLoadData, isDataLoaded} = props;
@@ -29,14 +32,9 @@ export const App = (props) => {
   if (!isDataLoaded) {
     return (
       <div
-        style={{
-          minHeight: `640px`,
-          display: `flex`,
-          justifyContent: `center`,
-          alignItems: `center`,
-        }}
+        style={spinnerStyle}
       >
-        <SyncLoader color="#4481c3" css={override} />;
+        <SyncLoader color="#4481c3" />
       </div>
     );
   }
@@ -46,12 +44,12 @@ export const App = (props) => {
       <Switch>
         <Route exact path={AppRoute.MAIN} render={() => <Main />} />
         <Route exact path={AppRoute.LOGIN} render={() => <Login />} />
-        <PrivateRoute exact path={AppRoute.FAVORITES} render={() => <Favorites />} />
-        <Route
+        <PrivateRoute
           exact
-          path={AppRoute.ROOM}
-          render={() => <Property />}
+          path={AppRoute.FAVORITES}
+          render={() => <Favorites />}
         />
+        <Route exact path={AppRoute.ROOM} render={() => <Property />} />
         <Route render={() => <PageNotFound />} />
       </Switch>
     </BrowserRouter>
