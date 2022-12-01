@@ -6,7 +6,7 @@ import {logout} from "../../store/api-actions";
 import {HEADER_TYPES} from "../types";
 
 export const Header = (props) => {
-  const {authorizationEmail, authorizationStatus, onLogout} = props;
+  const {user, authorizationStatus, onLogout} = props;
 
   const renderLoginField = () => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
@@ -14,7 +14,7 @@ export const Header = (props) => {
         <a onClick={onLogout} className="header__nav-link header__nav-link--profile">
           <div className="header__avatar-wrapper user__avatar-wrapper"></div>
           <span className="header__user-name user__name">
-            {authorizationEmail || `User`}
+            {user.email || `user@email.com`}
           </span>
         </a>
       );
@@ -65,7 +65,7 @@ Header.propTypes = HEADER_TYPES;
 
 const mapStateToProps = (state) => ({
   authorizationStatus: state.authorizationStatus,
-  authorizationEmail: state.authorizationEmail,
+  user: state.user,
 });
 
 const mapDispatchToProps = (dispatch) => {

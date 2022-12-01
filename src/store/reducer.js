@@ -1,8 +1,8 @@
-import {adaptOfferToClient} from '../adapter';
-import {Locations} from '../constants';
-import {ActionType} from './action';
-import {SortState, AuthorizationStatus} from '../constants';
-import {sortedOffers} from '../utils';
+import {adaptOfferToClient} from "../adapter";
+import {Locations} from "../constants";
+import {ActionType} from "./action";
+import {SortState, AuthorizationStatus} from "../constants";
+import {sortedOffers} from "../utils";
 
 const initialState = {
   offers: [],
@@ -12,7 +12,7 @@ const initialState = {
   sortState: SortState.POPULAR,
   hoveredElement: null,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
-  authorizationEmail: null,
+  user: null,
   isDataLoaded: false,
   isCommentsLoaded: false,
 };
@@ -24,7 +24,9 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         offers,
-        currentOffers: offers.filter((offer) => offer.city.name === state.selectedCity), // exclude
+        currentOffers: offers.filter(
+            (offer) => offer.city.name === state.selectedCity
+        ), // exclude
         isDataLoaded: true,
       };
     }
@@ -32,14 +34,18 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         selectedCity: action.payload,
-        currentOffers: state.offers.filter((offer) => offer.city.name === action.payload),
+        currentOffers: state.offers.filter(
+            (offer) => offer.city.name === action.payload
+        ),
       };
     }
     case ActionType.SORT_CHANGE: {
       return {
         ...state,
         sortState: SortState[action.payload],
-        currentOffers: sortedOffers[SortState[action.payload]](state.offers.filter((offer) => offer.city.name === state.selectedCity)),
+        currentOffers: sortedOffers[SortState[action.payload]](
+            state.offers.filter((offer) => offer.city.name === state.selectedCity)
+        ),
       };
     }
     case ActionType.HOVER_ELEMENT: {
@@ -53,16 +59,30 @@ export const reducer = (state = initialState, action) => {
         ...state,
       };
     }
-    case ActionType.REQUIRED_AUTHORIZATION: {
+    case ActionType.CHANGE_AUTHORIZATION_STATUS: {
       return {
         ...state,
         authorizationStatus: action.payload,
       };
     }
-    case ActionType.UPDATE_LOGIN_DATA: {
+    case ActionType.UPDATE_USER_DATA: {
+      const {
+        name,
+        avatar_url: avatarUrl,
+        email,
+        id,
+        is_pro: isPro,
+      } = action.payload;
       return {
         ...state,
-        authorizationEmail: action.payload,
+        user: {
+          ...state.user,
+          name,
+          avatarUrl,
+          email,
+          id,
+          isPro,
+        },
       };
     }
     case ActionType.LOAD_COMMENTS: {
@@ -75,10 +95,11 @@ export const reducer = (state = initialState, action) => {
     case ActionType.LOGOUT: {
       return {
         ...state,
-        authorizationEmail: null,
+        user: null,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
       };
     }
-    default: return state;
+    default:
+      return state;
   }
 };

@@ -246,8 +246,6 @@ function mapStateToProps(state) {
   return {
     offers: state.offers,
     hoveredElement: state.hoveredElement,
-    authorizationStatus: state.authorizationStatus,
-    authorizationEmail: state.authorizationEmail,
     comments: state.comments,
     isCommentsLoaded: state.isCommentsLoaded,
   };

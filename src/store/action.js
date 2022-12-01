@@ -4,8 +4,8 @@ export const ActionType = {
   HOVER_ELEMENT: `@hover/element`,
   OFFERS_LIST_LOAD: `@offersList/Load`,
   OFFERS_LIST_UPDATE: `@offersList/Update`,
-  REQUIRED_AUTHORIZATION: `@user/requiredAuthorization`,
-  UPDATE_LOGIN_DATA: `@user/updateLoginData`,
+  CHANGE_AUTHORIZATION_STATUS: `@user/changeAuthorizationStatus`,
+  UPDATE_USER_DATA: `@user/updateUserData`,
   LOAD_COMMENTS: `@comments/loadComments`,
   LOGOUT: `@user/logout`,
 };
@@ -31,11 +31,11 @@ export const ActionCreator = {
     type: ActionType.OFFERS_LIST_UPDATE,
   }),
   requiredAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
+    type: ActionType.CHANGE_AUTHORIZATION_STATUS,
     payload: status,
   }),
-  updateLoginData: (email) => ({
-    type: ActionType.UPDATE_LOGIN_DATA,
+  updateUserData: (email) => ({
+    type: ActionType.UPDATE_USER_DATA,
     payload: email,
   }),
   loadComments: (comments) => ({

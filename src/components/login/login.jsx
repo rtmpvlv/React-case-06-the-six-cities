@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useState} from "react";
 import {connect} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import Header from "../header/header";
@@ -7,18 +7,13 @@ import {AppRoute} from "../../constants";
 import {LOGIN_TYPES} from "../types";
 
 const Login = ({onSubmit}) => {
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
   const history = useHistory();
-  const loginRef = useRef();
-  const passwordRef = useRef();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
-    onSubmit({
-      email: loginRef.current.value,
-      passwordRef: passwordRef.current.value,
-    });
-
+    onSubmit({email, password});
     history.push(AppRoute.MAIN);
   };
 
@@ -38,7 +33,7 @@ const Login = ({onSubmit}) => {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
-                  ref={loginRef}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="login__input form__input"
                   type="email"
                   name="email"
@@ -49,7 +44,7 @@ const Login = ({onSubmit}) => {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
                 <input
-                  ref={passwordRef}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="login__input form__input"
                   type="password"
                   name="password"
