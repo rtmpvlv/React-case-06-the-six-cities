@@ -22,6 +22,7 @@ export const adaptOfferToClient = (offer) => {
   delete adaptedData.max_adults;
   delete adaptedData.host.avatar_url;
   delete adaptedData.host.is_pro;
+  delete adaptedData.preview_image;
   return adaptedData;
 };
 

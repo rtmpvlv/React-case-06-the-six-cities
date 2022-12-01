@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import Header from "../header/header";
 import {HeaderLocationsList} from "../locations-list/header-locations-list";
 import {Sort} from "./sort-form";
-import PlacesList from "../places-list/places-list";
+import OffersList from "../offers-list/offers-list";
 import Map from "../map/map";
 import {ActionCreator} from "../../store/action";
 import {MAIN_TYPES} from "../types";
@@ -36,7 +36,7 @@ const Main = (props) => {
                 {offers.length} places to stay in {selectedCity}
               </b>
               <Sort sortState={sortState} onSortChange={onSortChange} />
-              <PlacesList offers={offers} />
+              <OffersList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">

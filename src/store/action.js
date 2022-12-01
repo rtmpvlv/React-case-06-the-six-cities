@@ -2,8 +2,10 @@ export const ActionType = {
   CHANGE_CITY: `@city/changeCity`,
   SORT_CHANGE: `@sort/sortChange`,
   HOVER_ELEMENT: `@hover/element`,
-  OFFERS_LIST_LOAD: `@offersList/Load`,
-  OFFERS_LIST_UPDATE: `@offersList/Update`,
+  SET_OFFER_ID: `@offer/setOfferId`,
+  LOAD_OFFER: `@offer/loadOffer`,
+  LOAD_OFFERS_LIST: `@offersList/Load`,
+  UPDATE_OFFERS_LIST: `@offersList/Update`,
   CHANGE_AUTHORIZATION_STATUS: `@user/changeAuthorizationStatus`,
   UPDATE_USER_DATA: `@user/updateUserData`,
   LOAD_COMMENTS: `@comments/loadComments`,
@@ -23,12 +25,20 @@ export const ActionCreator = {
     type: ActionType.HOVER_ELEMENT,
     payload: offer,
   }),
-  offersListLoad: (offers) => ({
-    type: ActionType.OFFERS_LIST_LOAD,
+  setOfferId: (id) => ({
+    type: ActionType.SET_OFFER_ID,
+    payload: id,
+  }),
+  loadOffer: (offer) => ({
+    type: ActionType.LOAD_OFFER,
+    payload: offer,
+  }),
+  loadOffersList: (offers) => ({
+    type: ActionType.LOAD_OFFERS_LIST,
     payload: offers,
   }),
-  offersListUpdate: () => ({
-    type: ActionType.OFFERS_LIST_UPDATE,
+  updateOffersList: () => ({
+    type: ActionType.UPDATE_OFFERS_LIST,
   }),
   requiredAuthorization: (status) => ({
     type: ActionType.CHANGE_AUTHORIZATION_STATUS,

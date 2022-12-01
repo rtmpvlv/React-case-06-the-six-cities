@@ -2,23 +2,15 @@ import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import PropTypes from "prop-types";
-import {SyncLoader} from "react-spinners";
 import {PageNotFound} from "../404/404";
 import Favorites from "../favorites/favorites";
 import Login from "../login/login";
 import Main from "../main/main";
 import Property from "../property/property";
 import PrivateRoute from "../private-route/private-route";
-import {loadOffers} from "../../store/api-actions";
+import {fetchOffers} from "../../store/api-actions";
+import {Spinner} from "../spinner/spinner";
 import {AppRoute} from "../../constants";
-
-const spinnerStyle = {
-  width: `100vw`,
-  height: `100vh`,
-  display: `flex`,
-  justifyContent: `center`,
-  alignItems: `center`,
-};
 
 export const App = (props) => {
   const {onLoadData, isDataLoaded} = props;
@@ -30,13 +22,7 @@ export const App = (props) => {
   }, [isDataLoaded]);
 
   if (!isDataLoaded) {
-    return (
-      <div
-        style={spinnerStyle}
-      >
-        <SyncLoader color="#4481c3" />
-      </div>
-    );
+    return <Spinner />;
   }
 
   return (
@@ -49,7 +35,7 @@ export const App = (props) => {
           path={AppRoute.FAVORITES}
           render={() => <Favorites />}
         />
-        <Route exact path={AppRoute.ROOM} render={() => <Property />} />
+        <Route exact path={AppRoute.ROOM_DOMAIN} render={() => <Property />} />
         <Route render={() => <PageNotFound />} />
       </Switch>
     </BrowserRouter>
@@ -70,7 +56,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onLoadData() {
-      dispatch(loadOffers());
+      dispatch(fetchOffers());
     },
   };
 };

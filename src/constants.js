@@ -2,7 +2,8 @@ export const AppRoute = {
   MAIN: `/`,
   LOGIN: `/login`,
   FAVORITES: `/favorites`,
-  ROOM: `/offer/:id`,
+  ROOM_DOMAIN: `/offer/:id`,
+  ROOM: `/offer/`,
 };
 
 export const Locations = [
@@ -56,6 +57,6 @@ export const AuthorizationStatus = {
 export const ApiRequestURLs = {
   LOGIN: `/login`,
   LOGOUT: `/logout`,
-  HOTELS: `/hotels`,
+  HOTELS: `/hotels/`,
   COMMENTS: `/comments/`,
 };

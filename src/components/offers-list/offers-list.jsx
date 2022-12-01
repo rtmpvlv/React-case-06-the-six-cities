@@ -1,26 +1,32 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Card} from "../card/card";
+import {OfferCard} from "../offer-card/offer-card";
 import {ActionCreator} from "../../store/action";
 import {OFFERS_TYPES} from "../types";
 
-export const PlacesList = (props) => {
+export const OffersList = (props) => {
   const {
     offers,
     onMouseHover,
+    onSetOfferId,
     className = `cities__places-list places__list tabs__content`,
   } = props;
 
   return (
     <div className={className}>
       {offers.map((offer) => (
-        <Card key={offer.id} offer={offer} onMouseHover={onMouseHover} />
+        <OfferCard
+          key={offer.id}
+          offer={offer}
+          onMouseHover={onMouseHover}
+          onSetOfferId={onSetOfferId}
+        />
       ))}
     </div>
   );
 };
 
-PlacesList.propTypes = OFFERS_TYPES;
+OffersList.propTypes = OFFERS_TYPES;
 
 const mapStateToProps = (state) => {
   return {
@@ -33,7 +39,10 @@ const mapDispatchToProps = (dispatch) => {
     onMouseHover(id) {
       dispatch(ActionCreator.hoverElement(id));
     },
+    onSetOfferId(id) {
+      dispatch(ActionCreator.setOfferId(id));
+    },
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlacesList);
+export default connect(mapStateToProps, mapDispatchToProps)(OffersList);

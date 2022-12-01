@@ -1,4 +1,4 @@
-import {adaptOfferToClient} from "../adapter";
+import {adaptCommentToClient, adaptOfferToClient} from "../adapter";
 import {Locations} from "../constants";
 import {ActionType} from "./action";
 import {SortState, AuthorizationStatus} from "../constants";
@@ -6,6 +6,8 @@ import {sortedOffers} from "../utils";
 
 const initialState = {
   offers: [],
+  offer: null,
+  offerId: null,
   comments: [],
   currentOffers: [],
   selectedCity: Locations[0],
@@ -15,11 +17,12 @@ const initialState = {
   user: null,
   isDataLoaded: false,
   isCommentsLoaded: false,
+  isOfferLoaded: false,
 };
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.OFFERS_LIST_LOAD: {
+    case ActionType.LOAD_OFFERS_LIST: {
       const offers = action.payload.map((offer) => adaptOfferToClient(offer));
       return {
         ...state,
@@ -28,6 +31,13 @@ export const reducer = (state = initialState, action) => {
             (offer) => offer.city.name === state.selectedCity
         ), // exclude
         isDataLoaded: true,
+      };
+    }
+    case ActionType.LOAD_OFFER: {
+      return {
+        ...state,
+        offer: adaptOfferToClient(action.payload),
+        isOfferLoaded: true,
       };
     }
     case ActionType.CHANGE_CITY: {
@@ -54,7 +64,13 @@ export const reducer = (state = initialState, action) => {
         hoveredElement: action.payload,
       };
     }
-    case ActionType.OFFERS_LIST_UPDATE: {
+    case ActionType.SET_OFFER_ID: {
+      return {
+        ...state,
+        offerId: action.payload,
+      };
+    }
+    case ActionType.UPDATE_OFFERS_LIST: {
       return {
         ...state,
       };
@@ -88,7 +104,7 @@ export const reducer = (state = initialState, action) => {
     case ActionType.LOAD_COMMENTS: {
       return {
         ...state,
-        comments: action.payload,
+        comments: action.payload.map((comment) => adaptCommentToClient(comment)),
         isCommentsLoaded: true,
       };
     }

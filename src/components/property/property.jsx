@@ -1,14 +1,17 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {useParams} from "react-router-dom";
-import {loadComments} from "../../store/api-actions";
+import {fetchComments} from "../../store/api-actions";
 import Header from "../header/header";
 import {ReviewsList} from "./reviews-list";
 import {ReviewForm} from "./review-form";
 import Map from "../map/map";
-import {Card} from "../card/card";
+import {OfferCard} from "../offer-card/offer-card";
 import {OFFERS_TYPES} from "../types";
 import {ActionCreator} from "../../store/action";
+import {fetchOffer} from "../../store/api-actions";
+import {Spinner} from "../spinner/spinner";
+import {PropertyImage} from "./image";
 
 const LIVING_TYPE = {
   apartment: `Apartment`,
@@ -17,30 +20,41 @@ const LIVING_TYPE = {
   hotel: `Hotel`,
 };
 
-const NEAR_OFFERS_LENGTH = {
-  START: 0,
-  MAX: 3,
-};
-
 const Property = (props) => {
   const {
+    offerId,
+    offer,
     offers,
-    onOfferHover,
-    hoveredElement,
     comments = [],
+    hoveredElement,
     isCommentsLoaded,
+    isOfferLoaded,
+    onLoadOffer,
     onLoadComments,
+    onOfferHover,
   } = props;
 
-  const currentId = parseInt(useParams().id, 10);
-  const currentOffer = offers.find((offer) => offer.id === currentId);
+  const offerIdFromParams = parseInt(useParams().id, 10);
+
+  useEffect(() => {
+    if (!isOfferLoaded || !offer) {
+      onLoadOffer(offerId || offerIdFromParams);
+    }
+  }, [isOfferLoaded]);
 
   useEffect(() => {
     if (!isCommentsLoaded) {
-      onLoadComments(currentId);
+      onLoadComments(offerId || offerIdFromParams);
     }
   }, [isCommentsLoaded]);
 
+  if (!isOfferLoaded || !isCommentsLoaded) {
+    return <Spinner />;
+  }
+
+  const nearOffers = offers
+    .filter((o) => offerId !== o.id && offer.city.name === o.city.name)
+    .slice(0, 3);
 
   const {
     bedrooms,
@@ -53,20 +67,7 @@ const Property = (props) => {
     title,
     rating,
     type,
-  } = currentOffer;
-
-  let nearOffers = offers.filter(
-      (offer) =>
-        offer !== currentOffer && offer.city.name === currentOffer.city.name
-  );
-
-  // Take 3 near offers
-  if (nearOffers.length > NEAR_OFFERS_LENGTH.MAX) {
-    nearOffers = nearOffers.slice(
-        NEAR_OFFERS_LENGTH.START,
-        NEAR_OFFERS_LENGTH.MAX
-    );
-  }
+  } = offer;
 
   return (
     <div className="page">
@@ -75,48 +76,9 @@ const Property = (props) => {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/room.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/apartment-02.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/apartment-03.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/studio-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
+              {offer.images.map((url, i) => (
+                <PropertyImage key={i} url={url} />
+              ))}
             </div>
           </div>
           <div className="property__container container">
@@ -146,7 +108,7 @@ const Property = (props) => {
                 <div className="property__stars rating__stars">
                   <span
                     style={{
-                      width: `80%`,
+                      width: `${rating * 20}%`,
                     }}
                   ></span>
                   <span className="visually-hidden">Rating</span>
@@ -186,17 +148,15 @@ const Property = (props) => {
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
                     <img
                       className="property__avatar user__avatar"
-                      src="img/avatar-angelina.jpg"
+                      src={host.avatarUrl}
                       width="74"
                       height="74"
                       alt="Host avatar"
                     />
                   </div>
                   <span className="property__user-name">{host.name}</span>
-                  {host.isPro ? (
+                  {host.isPro && (
                     <span className="property__user-status">Pro</span>
-                  ) : (
-                    ``
                   )}
                 </div>
                 <div className="property__description">
@@ -205,10 +165,8 @@ const Property = (props) => {
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">
-                  Reviews &middot;{` `}
-                  <span className="reviews__amount">
-                    {comments.length}
-                  </span>
+                  Reviews &middot;
+                  <span className="reviews__amount">{comments.length}</span>
                 </h2>
                 <ReviewsList comments={comments} />
                 <ReviewForm />
@@ -225,12 +183,8 @@ const Property = (props) => {
               Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
-              {nearOffers.map((offer) => (
-                <Card
-                  key={offer.id}
-                  offer={offer}
-                  onMouseHover={onOfferHover}
-                />
+              {nearOffers.map((o) => (
+                <OfferCard key={o.id} offer={o} onMouseHover={onOfferHover} />
               ))}
             </div>
           </section>
@@ -244,9 +198,12 @@ Property.propTypes = OFFERS_TYPES;
 
 function mapStateToProps(state) {
   return {
+    offerId: state.offerId,
+    offer: state.offer,
     offers: state.offers,
     hoveredElement: state.hoveredElement,
     comments: state.comments,
+    isOfferLoaded: state.isOfferLoaded,
     isCommentsLoaded: state.isCommentsLoaded,
   };
 }
@@ -256,8 +213,11 @@ function mapDispatchToProps(dispatch) {
     onOfferHover(id) {
       dispatch(ActionCreator.hoverElement(id));
     },
-    onLoadComments(offerId) {
-      dispatch(loadComments(offerId));
+    onLoadComments(id) {
+      dispatch(fetchComments(id));
+    },
+    onLoadOffer(id) {
+      dispatch(fetchOffer(id));
     },
   };
 }
