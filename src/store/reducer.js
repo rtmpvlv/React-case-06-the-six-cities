@@ -6,6 +6,7 @@ import {sortedOffers} from "../utils";
 
 const initialState = {
   offers: [],
+  offerEntities: {},
   offer: null,
   offerId: null,
   comments: [],
@@ -24,9 +25,16 @@ export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.LOAD_OFFERS_LIST: {
       const offers = action.payload.map((offer) => adaptOfferToClient(offer));
+
+      const offerEntities = offers.reduce((all, offer) => {
+        all[offer.id] = offer;
+        return all;
+      }, {});
+
       return {
         ...state,
         offers,
+        offerEntities,
         currentOffers: offers.filter(
             (offer) => offer.city.name === state.selectedCity
         ), // exclude

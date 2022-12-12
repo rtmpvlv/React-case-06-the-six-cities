@@ -12,6 +12,7 @@ import {ActionCreator} from "../../store/action";
 import {fetchOffer} from "../../store/api-actions";
 import {Spinner} from "../spinner/spinner";
 import {PropertyImage} from "./image";
+import {PageNotFound} from "../404/404";
 
 const LIVING_TYPE = {
   apartment: `Apartment`,
@@ -22,9 +23,10 @@ const LIVING_TYPE = {
 
 const Property = (props) => {
   const {
-    offerId,
+    offerId: stateOfferId,
     offer,
     offers,
+    offerEntities,
     comments = [],
     hoveredElement,
     isCommentsLoaded,
@@ -35,16 +37,21 @@ const Property = (props) => {
   } = props;
 
   const offerIdFromParams = parseInt(useParams().id, 10);
+  const offerId = stateOfferId || offerIdFromParams;
+
+  if (!offerEntities[offerId]) {
+    return <PageNotFound/>;
+  }
 
   useEffect(() => {
     if (!isOfferLoaded || !offer) {
-      onLoadOffer(offerId || offerIdFromParams);
+      onLoadOffer(offerId);
     }
   }, [isOfferLoaded]);
 
   useEffect(() => {
     if (!isCommentsLoaded) {
-      onLoadComments(offerId || offerIdFromParams);
+      onLoadComments(offerId);
     }
   }, [isCommentsLoaded]);
 
@@ -201,6 +208,7 @@ function mapStateToProps(state) {
     offerId: state.offerId,
     offer: state.offer,
     offers: state.offers,
+    offerEntities: state.offerEntities,
     hoveredElement: state.hoveredElement,
     comments: state.comments,
     isOfferLoaded: state.isOfferLoaded,
