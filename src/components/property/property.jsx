@@ -9,10 +9,11 @@ import Map from "../map/map";
 import {OfferCard} from "../offer-card/offer-card";
 import {OFFERS_TYPES} from "../types";
 import {ActionCreator} from "../../store/action";
-import {fetchOffer} from "../../store/api-actions";
+import {fetchOffer, postComment} from "../../store/api-actions";
 import {Spinner} from "../spinner/spinner";
 import {PropertyImage} from "./image";
 import {PageNotFound} from "../404/404";
+import {AuthorizationStatus} from "../../constants";
 
 const LIVING_TYPE = {
   apartment: `Apartment`,
@@ -31,16 +32,18 @@ const Property = (props) => {
     hoveredElement,
     isCommentsLoaded,
     isOfferLoaded,
+    authorizationStatus,
     onLoadOffer,
     onLoadComments,
     onOfferHover,
+    onPostComment,
   } = props;
 
   const offerIdFromParams = parseInt(useParams().id, 10);
   const offerId = stateOfferId || offerIdFromParams;
 
   if (!offerEntities[offerId]) {
-    return <PageNotFound/>;
+    return <PageNotFound />;
   }
 
   useEffect(() => {
@@ -176,7 +179,9 @@ const Property = (props) => {
                   <span className="reviews__amount">{comments.length}</span>
                 </h2>
                 <ReviewsList comments={comments} />
-                <ReviewForm />
+                {authorizationStatus === AuthorizationStatus.AUTH && (
+                  <ReviewForm onPostComment={onPostComment} offerId={offerId} />
+                )}
               </section>
             </div>
           </div>
@@ -213,6 +218,7 @@ function mapStateToProps(state) {
     comments: state.comments,
     isOfferLoaded: state.isOfferLoaded,
     isCommentsLoaded: state.isCommentsLoaded,
+    authorizationStatus: state.authorizationStatus,
   };
 }
 
@@ -226,6 +232,9 @@ function mapDispatchToProps(dispatch) {
     },
     onLoadOffer(id) {
       dispatch(fetchOffer(id));
+    },
+    onPostComment(id, comment) {
+      dispatch(postComment(id, comment));
     },
   };
 }

@@ -42,3 +42,8 @@ export const fetchComments = (id) => (dispatch, _getState, api) =>
   api
     .get(ApiRequestURLs.COMMENTS + id)
     .then(({data}) => dispatch(ActionCreator.loadComments(data)));
+
+export const postComment = (id, comment) => (dispatch, _getState, api) =>
+  api
+    .post(ApiRequestURLs.COMMENTS + id, comment)
+    .then(({data}) => dispatch(ActionCreator.loadComments(data)));

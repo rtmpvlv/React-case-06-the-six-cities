@@ -1,45 +1,46 @@
 import React, {useState} from "react";
+import PropTypes from "prop-types";
 
-const STARS_VALUES = [`1`, `2`, `3`, `4`, `5`];
+const STARS = [`5`, `4`, `3`, `2`, `1`];
 
-export const ReviewForm = () => {
-  const [state, setState] = useState({
-    rating: 5,
-    text: ``,
+export const ReviewForm = ({offerId, onPostComment}) => {
+  const [comment, setComment] = useState({
+    rating: null,
+    comment: ``,
   });
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    onPostComment(offerId, comment);
   };
 
   const handleRatingChange = (evt) => {
-    setState({
-      ...state,
+    setComment({
+      ...comment,
       rating: evt.target.value,
     });
   };
 
-  const handleTextChange = (evt) => {
-    setState({
-      ...state,
-      text: evt.target.value,
+  const handleCommentChange = (evt) => {
+    setComment({
+      ...comment,
+      comment: evt.target.value,
     });
   };
 
   const renderStars = () => {
-    return STARS_VALUES.map((value) => (
-      <React.Fragment key={value}
-      >
+    return STARS.map((star) => (
+      <React.Fragment key={star}>
         <input
           className="form__rating-input visually-hidden"
           name="rating"
-          value={value}
-          id={`${value}-stars`}
+          value={star}
+          id={`${star}-stars`}
           type="radio"
           onChange={handleRatingChange}
         />
         <label
-          htmlFor={`${value}-stars`}
+          htmlFor={`${star}-stars`}
           className="reviews__rating-label form__rating-label"
           title="perfect"
         >
@@ -61,15 +62,13 @@ export const ReviewForm = () => {
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
-      <div className="reviews__rating-form form__rating">
-        {renderStars()}
-      </div>
+      <div className="reviews__rating-form form__rating">{renderStars()}</div>
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={handleTextChange}
+        onChange={handleCommentChange}
       ></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -87,4 +86,9 @@ export const ReviewForm = () => {
       </div>
     </form>
   );
+};
+
+ReviewForm.propTypes = {
+  offerId: PropTypes.number.isRequired,
+  onPostComment: PropTypes.func.isRequired,
 };
