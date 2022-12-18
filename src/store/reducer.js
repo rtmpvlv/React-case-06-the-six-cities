@@ -48,6 +48,13 @@ export const reducer = (state = initialState, action) => {
         isOfferLoaded: true,
       };
     }
+    case ActionType.RESET_OFFER: {
+      return {
+        ...state,
+        offer: null,
+        isOfferLoaded: false,
+      };
+    }
     case ActionType.CHANGE_CITY: {
       return {
         ...state,
@@ -114,6 +121,13 @@ export const reducer = (state = initialState, action) => {
         ...state,
         comments: action.payload.map((comment) => adaptCommentToClient(comment)),
         isCommentsLoaded: true,
+      };
+    }
+    case ActionType.RESET_COMMENTS: {
+      return {
+        ...state,
+        comments: [],
+        isCommentsLoaded: false,
       };
     }
     case ActionType.LOGOUT: {

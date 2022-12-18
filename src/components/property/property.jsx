@@ -1,13 +1,14 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {useParams} from "react-router-dom";
+import PropTypes from 'prop-types';
 import {fetchComments} from "../../store/api-actions";
 import Header from "../header/header";
 import {ReviewsList} from "./reviews-list";
 import {ReviewForm} from "./review-form";
 import Map from "../map/map";
 import {OfferCard} from "../offer-card/offer-card";
-import {OFFERS_TYPES} from "../types";
+import {commentType, offerType} from "../types";
 import {ActionCreator} from "../../store/action";
 import {fetchOffer, postComment} from "../../store/api-actions";
 import {Spinner} from "../spinner/spinner";
@@ -37,6 +38,8 @@ const Property = (props) => {
     onLoadComments,
     onOfferHover,
     onPostComment,
+    onResetOffer,
+    onResetComments,
   } = props;
 
   const offerIdFromParams = parseInt(useParams().id, 10);
@@ -50,13 +53,15 @@ const Property = (props) => {
     if (!isOfferLoaded || !offer) {
       onLoadOffer(offerId);
     }
-  }, [isOfferLoaded]);
+    return () => onResetOffer();
+  }, []);
 
   useEffect(() => {
     if (!isCommentsLoaded) {
       onLoadComments(offerId);
     }
-  }, [isCommentsLoaded]);
+    return () => onResetComments();
+  }, []);
 
   if (!isOfferLoaded || !isCommentsLoaded) {
     return <Spinner />;
@@ -206,7 +211,23 @@ const Property = (props) => {
   );
 };
 
-Property.propTypes = OFFERS_TYPES;
+Property.propTypes = {
+  offerId: PropTypes.number,
+  offerEntities: PropTypes.object.isRequired,
+  comments: PropTypes.arrayOf(commentType),
+  offer: offerType,
+  offers: PropTypes.arrayOf(offerType),
+  hoveredElement: PropTypes.number,
+  authorizationStatus: PropTypes.string.isRequired,
+  onOfferHover: PropTypes.func.isRequired,
+  onResetOffer: PropTypes.func.isRequired,
+  onResetComments: PropTypes.func.isRequired,
+  onPostComment: PropTypes.func.isRequired,
+  onLoadComments: PropTypes.func.isRequired,
+  onLoadOffer: PropTypes.func.isRequired,
+  isOfferLoaded: PropTypes.bool.isRequired,
+  isCommentsLoaded: PropTypes.bool.isRequired,
+};
 
 function mapStateToProps(state) {
   return {
@@ -236,6 +257,12 @@ function mapDispatchToProps(dispatch) {
     onPostComment(id, comment) {
       dispatch(postComment(id, comment));
     },
+    onResetOffer() {
+      dispatch(ActionCreator.resetOffer());
+    },
+    onResetComments() {
+      dispatch(ActionCreator.resetComments());
+    }
   };
 }
 

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const offerType = PropTypes.shape({
+export const offerType = PropTypes.shape({
   bedrooms: PropTypes.number.isRequired,
   city: PropTypes.shape({
     location: PropTypes.shape({
@@ -36,9 +36,9 @@ const offerType = PropTypes.shape({
   rating: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-}).isRequired;
+});
 
-const commentType = PropTypes.shape({
+export const commentType = PropTypes.shape({
   comment: PropTypes.string,
   date: PropTypes.string,
   id: PropTypes.number,
@@ -50,10 +50,6 @@ const commentType = PropTypes.shape({
     name: PropTypes.string,
   }),
 });
-
-export const OFFERS_TYPES = {
-  offers: PropTypes.arrayOf(offerType).isRequired,
-};
 
 export const MAIN_TYPES = {
   offers: PropTypes.arrayOf(offerType).isRequired,
@@ -67,6 +63,10 @@ export const MAIN_TYPES = {
 
 export const OFFER_TYPES = {
   offer: offerType,
+};
+
+export const OFFERS_TYPES = {
+  offers: PropTypes.arrayOf(offerType).isRequired,
 };
 
 export const COMMENTS_TYPE = {

@@ -4,11 +4,13 @@ export const ActionType = {
   HOVER_ELEMENT: `@hover/element`,
   SET_OFFER_ID: `@offer/setOfferId`,
   LOAD_OFFER: `@offer/loadOffer`,
+  RESET_OFFER: `@offer/resetOffer`,
   LOAD_OFFERS_LIST: `@offersList/Load`,
   UPDATE_OFFERS_LIST: `@offersList/Update`,
   CHANGE_AUTHORIZATION_STATUS: `@user/changeAuthorizationStatus`,
   UPDATE_USER_DATA: `@user/updateUserData`,
   LOAD_COMMENTS: `@comments/loadComments`,
+  RESET_COMMENTS: `@comments/resetComments`,
   LOGOUT: `@user/logout`,
 };
 
@@ -33,6 +35,9 @@ export const ActionCreator = {
     type: ActionType.LOAD_OFFER,
     payload: offer,
   }),
+  resetOffer: () => ({
+    type: ActionType.RESET_OFFER,
+  }),
   loadOffersList: (offers) => ({
     type: ActionType.LOAD_OFFERS_LIST,
     payload: offers,
@@ -51,6 +56,9 @@ export const ActionCreator = {
   loadComments: (comments) => ({
     type: ActionType.LOAD_COMMENTS,
     payload: comments,
+  }),
+  resetComments: () => ({
+    type: ActionType.RESET_COMMENTS,
   }),
   logout: () => ({
     type: ActionType.LOGOUT,
